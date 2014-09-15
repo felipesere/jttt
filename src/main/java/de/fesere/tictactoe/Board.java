@@ -18,8 +18,18 @@ public class Board {
   protected Board(List<String> marks){
     this.marks = marks;
   }
+
+  public Board nextBoardFor(int index, String mark) {
+    List<String> modifiedMarks = applyMark(index, mark);
+    return new Board(modifiedMarks);
+  }
+
   public List<Integer> getPossibleMoves() {
     return IntegerList(allIndizes().filter(i -> marks.get(i).equals(EMPTY)));
+  }
+
+  public boolean hasWinner() {
+    return allLines().stream().anyMatch(Line::hasWinner);
   }
 
   private IntStream allIndizes() {
@@ -30,18 +40,9 @@ public class Board {
    return input.boxed().collect(Collectors.toList());
   }
 
-  public Board nextBoardFor(int index, String mark) {
-    List<String> modifiedMarks = applyMark(index, mark);
-    return new Board(modifiedMarks);
-  }
-
   private List<String> applyMark(int index, String mark) {
     List<String> modified = new LinkedList<>(marks); modified.set(index, mark);
     return modified;
-  }
-
-  public boolean hasWinner() {
-    return allLines().stream().anyMatch(Line::hasWinner);
   }
 
   private List<Line> allLines() {
@@ -51,7 +52,6 @@ public class Board {
     lines.addAll(getDiagonals());
     return lines;
   }
-
 
   private List<Line> getRows() {
     List<Line> rows = new LinkedList<>();
