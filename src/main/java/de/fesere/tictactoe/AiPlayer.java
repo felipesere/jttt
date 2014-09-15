@@ -2,7 +2,10 @@ package de.fesere.tictactoe;
 
 import de.fesere.tictactoe.exceptions.InvalidPlayerException;
 
+import java.util.Comparator;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.maxBy;
 
 public class AiPlayer {
   private Mark mark;
@@ -26,14 +29,11 @@ public class AiPlayer {
   public int valueOfMove(Board board, int move) {
     Board newBoard = board.nextBoardFor(move, mark);
 
-    if(newBoard.hasWinner()) {
-      return 1 + newBoard.getPossibleMoves().size();
-    }
-    else if(newBoard.hasDraw()) {
-      return 0;
+    if(newBoard.isFinished()) {
+      return newBoard.getValue();
     }
     else {
-      return -opponent.valueOfMove(newBoard, findOptimalMove(newBoard));
+      return -opponent.valueOfMove(newBoard, opponent.findOptimalMove(newBoard));
     }
   }
 
@@ -43,15 +43,14 @@ public class AiPlayer {
   }
 
   private int findOptimalMove(Board board) {
-   return firstOf(moves(board).sorted((first, second) -> Integer.compare(valueOfMove(board, first), valueOfMove(board, second))));
+    return movesOf(board).collect(maxBy(moveValueComparator(board))).get();
   }
 
-  private Stream<Integer> moves(Board board) {
+  private Comparator<Integer> moveValueComparator(Board board) {
+    return (first, second) -> Integer.compare(valueOfMove(board, first), valueOfMove(board, second));
+  }
+
+  private Stream<Integer> movesOf(Board board) {
     return board.getPossibleMoves().stream();
   }
-
-  private int firstOf(Stream<Integer> stream) {
-    return stream.findFirst().get();
-  }
-
 }

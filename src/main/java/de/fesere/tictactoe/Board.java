@@ -39,6 +39,14 @@ public class Board {
     return allLines().stream().anyMatch(Line::hasWinner);
   }
 
+  public boolean isFinished() {
+    return hasWinner() || noMoreMoves();
+  }
+
+  private boolean noMoreMoves() {
+    return getPossibleMoves().isEmpty();
+  }
+
   private IntStream allIndizes() {
     return IntStream.range(0, marks.size());
   }
@@ -98,8 +106,11 @@ public class Board {
     return new Line(elements);
   }
 
-  public boolean hasDraw() {
-    return allLines().stream().allMatch(line -> !line.hasWinner()) && getPossibleMoves().size() == 0;
+  public int getValue() {
+    if(hasWinner()) {
+      return 1 + possibleMoves().size();
+    }
+    return 0;
   }
 
   private class Line {
@@ -117,5 +128,14 @@ public class Board {
     public boolean hasWinner() {
       return first == second && second == third && !first.isEmpty();
     }
+
+    public String toString() {
+      return "["+first+"]"+"["+second+"]"+"["+third+"]";
+    }
   }
+
+  public String toString() {
+    return getRows().toString();
+  }
+
 }

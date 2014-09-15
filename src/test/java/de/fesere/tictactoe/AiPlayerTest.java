@@ -64,6 +64,7 @@ public class AiPlayerTest {
                                    EMPTY, O,     EMPTY,
                                    EMPTY, EMPTY, X));
     Board result = player.performMove(board);
+    System.out.println(result);
     assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(2, 6));
   }
 
