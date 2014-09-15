@@ -1,5 +1,7 @@
 package de.fesere.tictactoe;
 
+import de.fesere.tictactoe.exceptions.InvalidMoveException;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,24 +10,23 @@ import java.util.stream.IntStream;
 
 public class Board {
 
-  public static final String EMPTY = "";
-  private List<String> marks;
+  private List<Mark> marks;
 
   public Board() {
-    marks = Collections.nCopies(9, EMPTY);
+    marks = Collections.nCopies(9, Mark.EMPTY);
   }
 
-  protected Board(List<String> marks){
+  protected Board(List<Mark> marks){
     this.marks = marks;
   }
 
-  public Board nextBoardFor(int index, String mark) {
-    List<String> modifiedMarks = applyMark(index, mark);
+  public Board nextBoardFor(int index, Mark mark) {
+    List<Mark> modifiedMarks = applyMark(index, mark);
     return new Board(modifiedMarks);
   }
 
   public List<Integer> getPossibleMoves() {
-    return IntegerList(allIndizes().filter(i -> marks.get(i).equals(EMPTY)));
+    return IntegerList(allIndizes().filter(i -> marks.get(i).isEmpty()));
   }
 
   public boolean hasWinner() {
@@ -40,9 +41,16 @@ public class Board {
    return input.boxed().collect(Collectors.toList());
   }
 
-  private List<String> applyMark(int index, String mark) {
-    List<String> modified = new LinkedList<>(marks); modified.set(index, mark);
+  private List<Mark> applyMark(int index, Mark mark) {
+    if(moveAlreadyTaken(index)){
+      throw new InvalidMoveException();
+    }
+    List<Mark> modified = new LinkedList<>(marks); modified.set(index, mark);
     return modified;
+  }
+
+  private boolean moveAlreadyTaken(int index) {
+    return !getPossibleMoves().contains(index);
   }
 
   private List<Line> allLines() {
@@ -77,7 +85,7 @@ public class Board {
   }
 
   private Line line(int ... indizes) {
-    List<String> elements = new LinkedList<>();
+    List<Mark> elements = new LinkedList<>();
     for(int index : indizes) {
       elements.add(marks.get(index));
     }
@@ -86,18 +94,18 @@ public class Board {
 
   private class Line {
 
-    private final String first;
-    private final String second;
-    private final String third;
+    private final Mark first;
+    private final Mark second;
+    private final Mark third;
 
-    public Line(List<String> elements){
-      first = elements.get(0);
+    public Line(List<Mark> elements){
+      first  = elements.get(0);
       second = elements.get(1);
-      third = elements.get(2);
+      third  = elements.get(2);
     }
 
     public boolean hasWinner() {
-      return first.equals(second) && second.equals(third) && !first.equals(EMPTY);
+      return first == second && second == third && !first.isEmpty();
     }
   }
 }
