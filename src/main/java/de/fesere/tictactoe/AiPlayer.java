@@ -1,7 +1,5 @@
 package de.fesere.tictactoe;
 
-import de.fesere.tictactoe.exceptions.InvalidPlayerException;
-
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -12,9 +10,6 @@ public class AiPlayer {
   private AiPlayer opponent;
 
   public static AiPlayer createAi(Mark mark) {
-    if(mark.isEmpty()) {
-      throw new InvalidPlayerException();
-    }
     AiPlayer self = new AiPlayer(mark);
     AiPlayer opponent = new AiPlayer(mark.opponent());
     self.opponent = opponent;

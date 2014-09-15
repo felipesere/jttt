@@ -13,7 +13,7 @@ public class Board {
   private List<Mark> marks;
 
   public Board() {
-    marks = Collections.nCopies(9, Mark.EMPTY);
+    marks = Collections.nCopies(9,null);
   }
 
   protected Board(List<Mark> marks){
@@ -32,7 +32,7 @@ public class Board {
   }
 
   private List<Integer> possibleMoves() {
-    return IntegerList(allIndizes().filter(i -> marks.get(i).isEmpty()));
+    return IntegerList(allIndizes().filter(i -> marks.get(i) == null));
   }
 
   public boolean hasWinner() {
@@ -126,11 +126,11 @@ public class Board {
     }
 
     public boolean hasWinner() {
-      return first == second && second == third && !first.isEmpty();
+      return first == second && second == third && first != null;
     }
 
     public String toString() {
-      return "["+first+"]"+"["+second+"]"+"["+third+"]";
+      return ("["+first+"]"+"["+second+"]"+"["+third+"]").replaceAll("null"," ");
     }
   }
 
