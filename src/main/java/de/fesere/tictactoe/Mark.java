@@ -8,4 +8,15 @@ public enum Mark {
     return this == EMPTY;
   }
 
+  public Mark opponent() {
+    if(this == X) {
+      return O;
+    }
+    else if(this == O) {
+      return X;
+    }
+    else{
+      throw new RuntimeException("EMPTY has no opponent");
+    }
+  }
 }

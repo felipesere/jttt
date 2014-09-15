@@ -26,6 +26,12 @@ public class Board {
   }
 
   public List<Integer> getPossibleMoves() {
+    List<Integer> moves = possibleMoves();
+    Collections.shuffle(moves);
+    return moves;
+  }
+
+  private List<Integer> possibleMoves() {
     return IntegerList(allIndizes().filter(i -> marks.get(i).isEmpty()));
   }
 
@@ -90,6 +96,10 @@ public class Board {
       elements.add(marks.get(index));
     }
     return new Line(elements);
+  }
+
+  public boolean hasDraw() {
+    return allLines().stream().allMatch(line -> !line.hasWinner()) && getPossibleMoves().size() == 0;
   }
 
   private class Line {
