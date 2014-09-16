@@ -10,9 +10,9 @@ public class AiPlayer {
   private AiPlayer opponent;
 
   public static AiPlayer createAi(Mark mark) {
-    AiPlayer self = new AiPlayer(mark);
+    AiPlayer self     = new AiPlayer(mark);
     AiPlayer opponent = new AiPlayer(mark.opponent());
-    self.opponent = opponent;
+    self.opponent     = opponent;
     opponent.opponent = self;
     return self;
   }
@@ -25,7 +25,7 @@ public class AiPlayer {
     Board newBoard = board.nextBoardFor(move, mark);
 
     if(newBoard.isFinished()) {
-      return newBoard.getValue();
+      return newBoard.getScore();
     }
     else {
       return -opponent.valueOfMove(newBoard, opponent.findOptimalMove(newBoard));

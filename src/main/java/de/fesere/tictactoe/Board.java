@@ -12,8 +12,10 @@ public class Board {
 
   private List<Mark> marks;
 
+  private static final Mark EMPTY = null;
+
   public Board() {
-    marks = Collections.nCopies(9,null);
+    marks = Collections.nCopies(9, EMPTY);
   }
 
   protected Board(List<Mark> marks){
@@ -32,7 +34,7 @@ public class Board {
   }
 
   private List<Integer> possibleMoves() {
-    return IntegerList(allIndizes().filter(i -> marks.get(i) == null));
+    return IntegerList(allIndizes().filter(i -> marks.get(i) == EMPTY));
   }
 
   public boolean hasWinner() {
@@ -40,10 +42,10 @@ public class Board {
   }
 
   public boolean isFinished() {
-    return hasWinner() || noMoreMoves();
+    return hasWinner() || hasNoMoreMoves();
   }
 
-  private boolean noMoreMoves() {
+  private boolean hasNoMoreMoves() {
     return getPossibleMoves().isEmpty();
   }
 
@@ -93,8 +95,8 @@ public class Board {
 
   private List<Line> getDiagonals() {
     List<Line> diagonals = new LinkedList<>();
-    diagonals.add(line(0,4,8));
-    diagonals.add(line(2,4,6));
+    diagonals.add(line(0, 4, 8));
+    diagonals.add(line(2, 4, 6));
     return diagonals;
   }
 
@@ -106,7 +108,7 @@ public class Board {
     return new Line(elements);
   }
 
-  public int getValue() {
+  public int getScore() {
     if(hasWinner()) {
       return 1 + possibleMoves().size();
     }
@@ -128,14 +130,5 @@ public class Board {
     public boolean hasWinner() {
       return first == second && second == third && first != null;
     }
-
-    public String toString() {
-      return ("["+first+"]"+"["+second+"]"+"["+third+"]").replaceAll("null"," ");
-    }
   }
-
-  public String toString() {
-    return getRows().toString();
-  }
-
 }
