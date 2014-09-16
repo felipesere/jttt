@@ -2,48 +2,69 @@ package de.fesere.tictactoe;
 
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 import static de.fesere.tictactoe.Mark.O;
 import static de.fesere.tictactoe.Mark.X;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class StatisticsTest {
 
   Player first = AiPlayer.createAi(X);
   Player second = new RandomPlayer(O);
-  Map<Player, Integer> score = new HashMap<>();
   int draws = 0;
+  int ai = 0;
+  int random = 0;
 
   @Test
   public void test() {
-
-    score.put(first, 0);
-    score.put(second, 0);
-    Player current = first;
-    Board board = new Board();
-    int iterations = 0;
-    while(!board.isFinished()) {
-      System.out.println(iterations++);
-      current = changePlayer(current);
-      board = current.performMove(board);
-      if(board.hasWinner()) {
-        int t = score.get(current);
-        score.put(current, t + 1);
-      }
-      else if (board.hasDraw()) {
-        draws++;
+    for (int i = 0; i < 100; i++) {
+      Player current = second;
+      Board board = new Board();
+      while (!board.isFinished()) {
+        current = changePlayer(current);
+        board = current.performMove(board);
+        if (board.hasWinner()) {
+          if (current == first) {
+            ai++;
+          } else {
+            random++;
+          }
+        } else if (board.hasDraw()) {
+          draws++;
+        }
       }
     }
-    System.out.println(current);
+    System.out.println("AI wins: " + ai);
+    System.out.println("Random wins: " + random);
+    System.out.println("Draws: " + draws);
+    assertThat(random, is(0));
   }
 
   private Player changePlayer(Player current) {
-   if(current == first) {
-     return second;
-   }
-    else {
-     return first;
-   }
+    if (current == first) {
+      return second;
+    } else {
+      return first;
+    }
+  }
+
+  private class BoardSequence {
+    List<Board> sequence = new LinkedList<>();
+
+    public void add(Board board) {
+      sequence.add(board);
+    }
+
+    public String toString() {
+      String result = "";
+      for(int i = 0; i < sequence.size(); i++){
+        Board board = sequence.get(i);
+       result += i + " " + board.toString() + "\n";
+      }
+      return result;
+    }
   }
 }

@@ -110,13 +110,22 @@ public class Board {
 
   public int getScore() {
     if(hasWinner()) {
-      return 1 + possibleMoves().size();
+      return possibleMoves().size() + 1;
     }
     return 0;
   }
 
   public boolean hasDraw() {
     return !hasWinner() && hasNoMoreMoves();
+  }
+
+  public boolean isWinner(Mark player) {
+    for(Line line : allLines()) {
+      if(line.isWinner(player)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private class Line {
@@ -131,8 +140,26 @@ public class Board {
       third  = elements.get(2);
     }
 
-    public boolean hasWinner() {
-      return first == second && second == third && first != null;
+    @Override
+    public String toString() {
+      return "["+first+"]["+second+"]["+third+"]";
     }
+
+    public boolean isWinner(Mark mark) {
+     return allSame() && first == mark;
+    }
+
+    public boolean hasWinner() {
+      return allSame() && first != null;
+    }
+
+    private boolean allSame() {
+      return first == second && second == third;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return getRows().toString();
   }
 }
