@@ -1,6 +1,5 @@
 package de.fesere.tictactoe;
 
-import de.fesere.tictactoe.exceptions.InvalidPlayerException;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -10,7 +9,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static de.fesere.tictactoe.Mark.*;
+import static de.fesere.tictactoe.Mark.O;
+import static de.fesere.tictactoe.Mark.X;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,14 +25,9 @@ public class AiPlayerTest {
     player = AiPlayer.createAi(X);
   }
 
-  @Test(expected = InvalidPlayerException.class)
-  public void canNotBeConstructedWithEmptyMark(){
-    AiPlayer.createAi(EMPTY);
-  }
-
   @Test
   public void valueOfWinningMoveIsPositive() {
-    Board board = new Board(asList(X, X, EMPTY,
+    Board board = new Board(asList(X, X, null,
                                    O, O, X,
                                    O, X, O));
 
@@ -41,7 +36,7 @@ public class AiPlayerTest {
 
   @Test
   public void valueOfDrawIsZero() {
-    Board board = new Board(asList(X, O, EMPTY,
+    Board board = new Board(asList(X, O, null,
                                    O, X, X,
                                    O, X, O));
 
@@ -50,7 +45,7 @@ public class AiPlayerTest {
 
   @Test
   public void makesDirectWinningMove(){
-    Board board = new Board(asList(X, X, EMPTY,
+    Board board = new Board(asList(X, X, null,
                                    O, O, X,
                                    O, X, O));
     Board result = player.performMove(board);
@@ -60,9 +55,9 @@ public class AiPlayerTest {
 
   @Test
   public void forcesOponentsHandVersion1(){
-    Board board = new Board(asList(O,     EMPTY, EMPTY,
-                                   EMPTY, O,     EMPTY,
-                                   EMPTY, EMPTY, X));
+    Board board = new Board(asList(O,     null, null,
+                                   null, O,     null,
+                                   null, null, X));
     Board result = player.performMove(board);
     System.out.println(result);
     assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(2, 6));
@@ -70,18 +65,18 @@ public class AiPlayerTest {
 
   @Test
   public void forcesOponentsHandVersion2(){
-    Board board = new Board(asList(O,     EMPTY, EMPTY,
-                                   EMPTY, X,     EMPTY,
-                                   EMPTY, EMPTY, O));
+    Board board = new Board(asList(O,     null, null,
+                                   null, X,     null,
+                                   null, null, O));
     Board result = player.performMove(board);
     assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(1, 3, 5, 7));
   }
 
   @Test
   public void forcesOponentsHandVersion3(){
-    Board board = new Board(asList(EMPTY,     O, EMPTY,
-                                   O,         X, EMPTY,
-                                   EMPTY, EMPTY, EMPTY));
+    Board board = new Board(asList(null,     O, null,
+                                   O,         X, null,
+                                   null, null, null));
     Board result = player.performMove(board);
     assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(0, 2, 6, 7));
   }
