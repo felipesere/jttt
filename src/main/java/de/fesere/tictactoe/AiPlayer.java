@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.maxBy;
 
-public class AiPlayer {
+public class AiPlayer implements Player {
   private Mark mark;
   private AiPlayer opponent;
 
@@ -32,6 +32,7 @@ public class AiPlayer {
     }
   }
 
+  @Override
   public Board performMove(Board board) {
     int move = findOptimalMove(board);
     return board.nextBoardFor(move, mark);

@@ -115,6 +115,10 @@ public class Board {
     return 0;
   }
 
+  public boolean hasDraw() {
+    return !hasWinner() && hasNoMoreMoves();
+  }
+
   private class Line {
 
     private final Mark first;
