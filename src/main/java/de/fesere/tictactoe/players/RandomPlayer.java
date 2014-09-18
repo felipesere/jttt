@@ -1,4 +1,8 @@
-package de.fesere.tictactoe;
+package de.fesere.tictactoe.players;
+
+import de.fesere.tictactoe.Board;
+import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.Player;
 
 public class RandomPlayer implements Player {
 

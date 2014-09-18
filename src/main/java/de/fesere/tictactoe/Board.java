@@ -18,7 +18,7 @@ public class Board {
     marks = Collections.nCopies(9, EMPTY);
   }
 
-  protected Board(List<Mark> marks){
+  public Board(List<Mark> marks){
     this.marks = marks;
   }
 
@@ -115,17 +115,9 @@ public class Board {
     return 0;
   }
 
-  public boolean hasDraw() {
-    return !hasWinner() && hasNoMoreMoves();
-  }
-
-  public boolean isWinner(Mark player) {
-    for(Line line : allLines()) {
-      if(line.isWinner(player)) {
-        return true;
-      }
-    }
-    return false;
+  @Override
+  public String toString() {
+    return getRows().toString();
   }
 
   private class Line {
@@ -145,21 +137,12 @@ public class Board {
       return "["+first+"]["+second+"]["+third+"]";
     }
 
-    public boolean isWinner(Mark mark) {
-     return allSame() && first == mark;
-    }
-
     public boolean hasWinner() {
-      return allSame() && first != null;
+      return allSame() && first != EMPTY;
     }
 
     private boolean allSame() {
       return first == second && second == third;
     }
-  }
-
-  @Override
-  public String toString() {
-    return getRows().toString();
   }
 }

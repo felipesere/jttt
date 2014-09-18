@@ -1,10 +1,19 @@
-package de.fesere.tictactoe;
+package de.fesere.tictactoe.players;
+
+import de.fesere.tictactoe.Board;
+import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.Player;
 
 public class AiPlayer implements Player {
   private Mark mark;
+  private AiPlayer opponent;
 
   public static AiPlayer createAi(Mark mark) {
-    return new AiPlayer(mark);
+    AiPlayer self = new AiPlayer(mark);
+    AiPlayer other = new AiPlayer(mark.opponent());
+    self.opponent = other;
+    other.opponent = self;
+    return self;
   }
 
   private AiPlayer(Mark mark) {
@@ -22,7 +31,7 @@ public class AiPlayer implements Player {
     int best_score = -Integer.MAX_VALUE;
     for(int move : board.getPossibleMoves()) {
       Board newBoard = board.nextBoardFor(move, mark);
-      int score = -alpha_beta(newBoard, -Integer.MAX_VALUE, Integer.MAX_VALUE, mark.opponent());
+      int score = -opponent.alpha_beta(newBoard, -Integer.MAX_VALUE, Integer.MAX_VALUE);
       if(score > best_score) {
         best_move = move;
         best_score = score;
@@ -31,38 +40,25 @@ public class AiPlayer implements Player {
     return best_move;
   }
 
-  private int alpha_beta(Board board, int alpha, int beta, Mark player) {
+  private int alpha_beta(Board board, int alpha, int beta) {
     if(board.isFinished()) {
-      return valueOfBoard(board, player);
-    }
-    else {
-      return calculateBestScore(board, alpha, beta, player);
-    }
-  }
-
-  private int valueOfBoard(Board board, Mark player) {
-    if(board.isWinner(player)) {
-      return board.getScore();
-    }
-    else {
       return -board.getScore();
     }
+    else {
+      return calculateBestScore(board, alpha, beta);
+    }
   }
 
-  private int calculateBestScore(Board board, int alpha, int beta, Mark player) {
-    int score = alpha;
+  private int calculateBestScore(Board board, int alpha, int beta) {
+    int score;
     for(int move : board.getPossibleMoves() ) {
-      Board newBoard = board.nextBoardFor(move, player);
-      score = -alpha_beta(newBoard, -beta, -alpha, player.opponent());
+      Board newBoard = board.nextBoardFor(move, mark);
+      score = -opponent.alpha_beta(newBoard, -beta, -alpha);
       alpha = Math.max(alpha, score);
       if(alpha >= beta) {
         break;
       }
     }
     return alpha;
-  }
-
-  public int valueOfMove(Board board, int i) {
-    return 0;
   }
 }

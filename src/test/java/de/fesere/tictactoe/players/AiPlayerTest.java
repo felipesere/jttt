@@ -1,10 +1,11 @@
-package de.fesere.tictactoe;
+package de.fesere.tictactoe.players;
 
+import de.fesere.tictactoe.Board;
+import de.fesere.tictactoe.Player;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -15,36 +16,20 @@ import static de.fesere.tictactoe.Mark.X;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 
-public class AiPlayerTest {
+public class AiPlayerTest extends PlayerCommonTest {
 
-  private AiPlayer player;
+  private Player player;
 
   @Before
   public void before() {
-    player = AiPlayer.createAi(X);
+    player =  getPlayer();
   }
 
-  @Ignore
-  @Test
-  public void valueOfWinningMoveIsPositive() {
-    Board board = new Board(asList(X, X, null,
-                                   O, O, X,
-                                   O, X, O));
-
-    assertThat(player.valueOfMove(board, 2), is(greaterThan(0)));
+  @Override
+  Player getPlayer() {
+    return AiPlayer.createAi(X);
   }
-
-  @Test
-  public void valueOfDrawIsZero() {
-    Board board = new Board(asList(X, O, null,
-                                   O, X, X,
-                                   O, X, O));
-
-    assertThat(player.valueOfMove(board, 2), is(0));
-  }
-
   @Test
   public void makesDirectWinningMove(){
     Board board = new Board(asList(X, X, null,
@@ -53,7 +38,6 @@ public class AiPlayerTest {
     Board result = player.performMove(board);
     assertThat(result.hasWinner(), is(true));
   }
-
 
   @Test
   public void forcesOponentsHandVersion1(){
