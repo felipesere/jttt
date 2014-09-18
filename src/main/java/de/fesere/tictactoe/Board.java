@@ -2,9 +2,7 @@ package de.fesere.tictactoe;
 
 import de.fesere.tictactoe.exceptions.InvalidMoveException;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -12,10 +10,8 @@ public class Board {
 
   private List<Mark> marks;
 
-  private static final Mark EMPTY = null;
-
   public Board() {
-    marks = Collections.nCopies(9, EMPTY);
+    marks = Collections.nCopies(9, Mark.EMPTY);
   }
 
   public Board(List<Mark> marks){
@@ -34,7 +30,9 @@ public class Board {
   }
 
   private List<Integer> possibleMoves() {
-    return IntegerList(allIndizes().filter(i -> marks.get(i) == EMPTY));
+    return IntegerList(allIndizes()
+             .filter(i -> marks.get(i).isEmpty())
+             .map(i -> i + 1));
   }
 
   public boolean hasWinner() {
@@ -61,7 +59,8 @@ public class Board {
     if(moveAlreadyTaken(index)){
       throw new InvalidMoveException();
     }
-    List<Mark> modified = new LinkedList<>(marks); modified.set(index, mark);
+    List<Mark> modified = new LinkedList<>(marks);
+    modified.set(index-1, mark);
     return modified;
   }
 
@@ -120,6 +119,14 @@ public class Board {
     return getRows().toString();
   }
 
+  public Map<Integer, Mark> getMarks() {
+    Map<Integer, Mark> result = new HashMap<>();
+    for(int i = 0; i < marks.size(); i++) {
+      result.put(i+1, marks.get(i));
+    }
+    return result;
+  }
+
   private class Line {
 
     private final Mark first;
@@ -138,7 +145,7 @@ public class Board {
     }
 
     public boolean hasWinner() {
-      return allSame() && first != EMPTY;
+      return allSame() && !first.isEmpty();
     }
 
     private boolean allSame() {

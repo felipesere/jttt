@@ -21,7 +21,7 @@ public class StateOfBoardTest {
 
   public Mark convert(String mark) {
     if(mark.equals("")) {
-      return null;
+      return Mark.EMPTY;
     }
     else {
       return Mark.valueOf(mark);

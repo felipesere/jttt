@@ -11,8 +11,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static de.fesere.tictactoe.Mark.O;
-import static de.fesere.tictactoe.Mark.X;
+import static de.fesere.tictactoe.Mark.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,16 +22,16 @@ public class AiPlayerTest extends PlayerCommonTest {
 
   @Before
   public void before() {
-    player =  getPlayer();
+    player =  playerForCommonTests();
   }
 
   @Override
-  Player getPlayer() {
+  Player playerForCommonTests() {
     return AiPlayer.createAi(X);
   }
   @Test
   public void makesDirectWinningMove(){
-    Board board = new Board(asList(X, X, null,
+    Board board = new Board(asList(X, X, EMPTY,
                                    O, O, X,
                                    O, X, O));
     Board result = player.performMove(board);
@@ -41,30 +40,29 @@ public class AiPlayerTest extends PlayerCommonTest {
 
   @Test
   public void forcesOponentsHandVersion1(){
-    Board board = new Board(asList(O,     null, null,
-                                   null, O,     null,
-                                   null, null, X));
+    Board board = new Board(asList(O,     EMPTY, EMPTY,
+                                   EMPTY, O,     EMPTY,
+                                   EMPTY, EMPTY, X));
     Board result = player.performMove(board);
-    System.out.println(result);
-    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(2, 6));
+    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(3, 7));
   }
 
   @Test
   public void forcesOponentsHandVersion2(){
-    Board board = new Board(asList(O,     null, null,
-                                   null, X,     null,
-                                   null, null, O));
+    Board board = new Board(asList(O,     EMPTY, EMPTY,
+                                   EMPTY, X,     EMPTY,
+                                   EMPTY, EMPTY, O));
     Board result = player.performMove(board);
-    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(1, 3, 5, 7));
+    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(2, 4, 6, 8));
   }
 
   @Test
   public void forcesOponentsHandVersion3(){
-    Board board = new Board(asList(null,     O, null,
-                                   O,         X, null,
-                                   null, null, null));
+    Board board = new Board(asList(EMPTY,     O, EMPTY,
+                                   O,         X, EMPTY,
+                                   EMPTY, EMPTY, EMPTY));
     Board result = player.performMove(board);
-    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(0, 2, 6, 7));
+    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(1, 3, 7, 8));
   }
 
   private Matcher<List<Integer>> madeOneOfTheseMoves(int... numbers) {
