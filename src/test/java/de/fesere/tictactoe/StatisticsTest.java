@@ -2,11 +2,13 @@ package de.fesere.tictactoe;
 
 import de.fesere.tictactoe.players.AiPlayer;
 import de.fesere.tictactoe.players.RandomPlayer;
+import de.fesere.tictactoe.ui.ConsoleInterface;
+import de.fesere.tictactoe.ui.FakeIO;
 import org.junit.Test;
 
 import static de.fesere.tictactoe.Mark.O;
 import static de.fesere.tictactoe.Mark.X;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.fail;
 
 public class StatisticsTest {
 
@@ -15,24 +17,13 @@ public class StatisticsTest {
 
   @Test
   public void test() {
+    ConsoleInterface consoleInterface = new ConsoleInterface(new FakeIO());
     for (int i = 0; i < 15; i++) {
-      Player current = random;
-      Board board = new Board();
-      while (!board.isFinished()) {
-        current = changePlayer(current);
-        board = current.performMove(board);
-        if (board.hasWinner() && current == random) {
-          fail("Random player should not win!");
-        }
+      Game game = new Game(consoleInterface, ai, random);
+      game.play();
+      if(game.hasWinner() && game.getWinner() == O) {
+        fail("Random should never win!");
       }
-    }
-  }
-
-  private Player changePlayer(Player current) {
-    if (current == ai) {
-      return random;
-    } else {
-      return ai;
     }
   }
 }

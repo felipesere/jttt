@@ -1,5 +1,7 @@
 package de.fesere.tictactoe;
 
+import de.fesere.tictactoe.ui.ConsoleInterface;
+import de.fesere.tictactoe.ui.FakeIO;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -15,7 +17,7 @@ public class GameTest {
 
   @Test
   public void firstPlayerWins() {
-    Game game = new Game(scriptedPlayer(X, asList(1,2,3)),scriptedPlayer(O, asList(4,5)));
+    Game game = new Game(new ConsoleInterface(new FakeIO()), scriptedPlayer(X, asList(1,2,3)),scriptedPlayer(O, asList(4,5)));
     game.play();
     assertThat(game.hasWinner(), is(true));
     assertThat(game.getWinner(), is(X));

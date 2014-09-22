@@ -11,7 +11,7 @@ public class Main {
     boolean play = true;
 
     while(play) {
-      Game game = new Game(players);
+      Game game = new Game(consoleInterface, players);
       game.play();
       if(game.hasWinner()) {
         consoleInterface.announceWinner(game.getWinner());

@@ -10,10 +10,11 @@ import static de.fesere.tictactoe.Mark.X;
 public class Game {
 
   private Map<Mark, Player> players = new HashMap<>();
-  ConsoleInterface console = new ConsoleInterface();
+  ConsoleInterface console;
   Board board = new Board();
 
-  public Game(Player... players) {
+  public Game(ConsoleInterface console, Player... players) {
+    this.console = console;
     for(Player player : players) {
       this.players.put(player.getMark(), player);
     }

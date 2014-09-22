@@ -130,12 +130,9 @@ public class ConsoleInterfaceTest {
   }
 
   private IO userEnters(int choice) {
-    return new IO() {
-        @Override
-        public Integer readInput() {
-          return choice;
-        }
-      };
+    FakeIO fakeIO = new FakeIO();
+    fakeIO.setInputs(choice);
+    return fakeIO;
   }
 
   private Matcher<Player[]> are(Class ... klass) {
