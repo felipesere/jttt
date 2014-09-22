@@ -114,11 +114,6 @@ public class Board {
     return 0;
   }
 
-  @Override
-  public String toString() {
-    return getRows().toString();
-  }
-
   public Map<Integer, Mark> getMarks() {
     Map<Integer, Mark> result = new HashMap<>();
     for(int i = 0; i < marks.size(); i++) {
@@ -137,11 +132,6 @@ public class Board {
       first  = elements.get(0);
       second = elements.get(1);
       third  = elements.get(2);
-    }
-
-    @Override
-    public String toString() {
-      return "["+first+"]["+second+"]["+third+"]";
     }
 
     public boolean hasWinner() {

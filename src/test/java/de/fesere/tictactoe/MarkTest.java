@@ -17,4 +17,9 @@ public class MarkTest {
   public void opponentOfOisX() {
     assertThat(O.opponent(), is(X));
   }
+
+  @Test(expected = RuntimeException.class)
+  public void emptyHasNoOpponent() {
+    EMPTY.opponent();
+  }
 }

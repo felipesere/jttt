@@ -26,6 +26,11 @@ public class AiPlayer implements Player {
    return board.nextBoardFor(move, mark);
   }
 
+  @Override
+  public Mark getMark() {
+    return mark;
+  }
+
   private int selectMove(Board board) {
     int best_move = 0;
     int best_score = -Integer.MAX_VALUE;

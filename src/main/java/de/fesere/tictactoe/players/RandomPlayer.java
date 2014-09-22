@@ -11,6 +11,12 @@ public class RandomPlayer implements Player {
   public RandomPlayer(Mark mark) {
     this.mark = mark;
   }
+
+  @Override
+  public Mark getMark() {
+    return mark;
+  }
+
   @Override
   public Board performMove(Board board) {
     int move = board.getPossibleMoves().get(0);
