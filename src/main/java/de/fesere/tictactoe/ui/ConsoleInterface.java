@@ -48,10 +48,14 @@ public class ConsoleInterface {
   public Player[] requestPlayers() {
     displayMenu();
     Integer choice = io.readInput();
-    if(choice == null || choice < 1 || choice > 4)  {
+
+    if(!validPlayerChoice(choice)){
       return requestPlayers();
     }
+    return getPlayers(choice);
+  }
 
+  private Player[] getPlayers(Integer choice) {
     if(choice == 1) {
       return new Player[] {new HumanPlayer(X), AiPlayer.createAi(O)};
     }
@@ -61,8 +65,11 @@ public class ConsoleInterface {
     if(choice == 3) {
       return new Player[] {AiPlayer.createAi(X), AiPlayer.createAi(O)};
     }
-
     return new Player[] {new HumanPlayer(X), new HumanPlayer(O)};
+  }
+
+  private boolean validPlayerChoice(Integer choice) {
+    return choice != null && choice > 0 && choice < 5;
   }
 
   public void announceWinner(Mark winner) {
