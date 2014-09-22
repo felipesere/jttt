@@ -31,33 +31,74 @@ public class ConsoleInterfaceTest {
   @Test
   public void canPrintABoardAnEmpty() {
     console.displayBoard(emptyBoard);
-    assertThat(accessibleIO.getWritten(), is("[1][2][3]\n[4][5][6]\n[7][8][9]\n"));
+    expectOutputToBe("[1][2][3]\n[4][5][6]\n[7][8][9]\n");
   }
 
   @Test
   public void canPrintABoardWithASingleMarker() {
     Board newBoard = emptyBoard.nextBoardFor(1, O);
     console.displayBoard(newBoard);
-    assertThat(accessibleIO.getWritten(), is("[O][2][3]\n[4][5][6]\n[7][8][9]\n"));
+    expectOutputToBe("[O][2][3]\n[4][5][6]\n[7][8][9]\n");
   }
 
   @Test
   public void canPrintABoardWithAMultpleMarkers() {
     Board newBoard = emptyBoard.nextBoardFor(1, O).nextBoardFor(5, X);
     console.displayBoard(newBoard);
-    assertThat(accessibleIO.getWritten(), is("[O][2][3]\n[4][X][6]\n[7][8][9]\n"));
+    expectOutputToBe("[O][2][3]\n[4][X][6]\n[7][8][9]\n");
   }
 
   @Test
   public void canPrintAMenuWithFourPlayerCombinations() {
    console.displayMenu();
-   assertThat(accessibleIO.getWritten(), is("Choose game:\n(1) Human vs. Computer\n(2) Computer vs. Human\n(3) Computer vs. Computer\n(4) Human vs. Human"));
+   expectOutputToBe("Choose game:\n(1) Human vs. Computer\n(2) Computer vs. Human\n(3) Computer vs. Computer\n(4) Human vs. Human");
   }
 
   @Test
   public void canRequestThePlayerToPlayAgain() {
     console.requestReplay();
-    assertThat(accessibleIO.getWritten(), is("Do you want to play again? (1) Yes  (2) No"));
+    expectOutputToBe("Do you want to play again? (1) Yes  (2) No");
+  }
+
+  @Test
+  public void canAnnounceAWinner() {
+    console.announceWinner(X);
+    expectOutputToBe("The winner is X");
+  }
+
+  @Test
+  public void canAnnounceADraw() {
+    console.announceDraw();
+    expectOutputToBe("There was a draw");
+  }
+
+  @Test
+  public void canRequestARematchAccepted() {
+    accessibleIO.setInputs(1);
+    boolean answer = console.requestRematch();
+    expectOutputToBe("Do you want to play again? (1) Yes  (2) No");
+    assertThat(answer, is(true));
+  }
+
+  @Test
+  public void canRequestARematchDenied() {
+    accessibleIO.setInputs(2);
+    boolean answer = console.requestRematch();
+    expectOutputToBe("Do you want to play again? (1) Yes  (2) No");
+    assertThat(answer, is(false));
+  }
+
+  @Test
+  public void canRequestAMoveToBeMade() {
+    accessibleIO.setInputs(1);
+    console.requestMove();
+    expectOutputToBe("Please enter a move number: ");
+  }
+  @Test
+  public void requestsARematchUntilCorrectAnswer() {
+    accessibleIO.setInputs(-1,1);
+    boolean answer = console.requestRematch();
+    assertThat(answer, is(true));
   }
 
   @Test
@@ -82,6 +123,10 @@ public class ConsoleInterfaceTest {
   public void canRequestTwoHumanPlayers() {
     Player[] players = new ConsoleInterface(userEnters(4)).requestPlayers();
     assertThat(players, are(HumanPlayer.class, HumanPlayer.class));
+  }
+
+  private void expectOutputToBe(String expected) {
+    assertThat(accessibleIO.getWritten(), is(expected));
   }
 
   private IO userEnters(int choice) {
@@ -118,5 +163,4 @@ public class ConsoleInterfaceTest {
       }
     };
   }
-
 }

@@ -1,12 +1,8 @@
 package de.fesere.tictactoe.ui;
 
-import de.fesere.tictactoe.ui.IO;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -40,6 +36,17 @@ public class IOTest {
    IO io = new IO(getInput(""), getOutput());
    io.write("wat");
    assertThat(output(), is("wat"));
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void exceptionsAreRethrown() {
+    IO io = new IO(new InputStream() {
+      @Override
+      public int read() throws IOException {
+        throw new IOException("Fire");
+      }
+    }, getOutput());
+    io.readInput();
   }
 
   private String output() {

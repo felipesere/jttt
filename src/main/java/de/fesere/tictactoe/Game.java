@@ -11,6 +11,7 @@ public class Game {
 
   private Map<Mark, Player> players = new HashMap<>();
   ConsoleInterface console = new ConsoleInterface();
+  Board board = new Board();
 
   public Game(Player... players) {
     for(Player player : players) {
@@ -19,20 +20,32 @@ public class Game {
   }
 
   public void play() {
-    Board board = new Board();
-    Player current = players.get(X);
+    Player currentPlayer = players.get(X);
     while (!board.isFinished()) {
-      console.displayBoard(board);
-      board = current.performMove(board);
-      current = players.get(current.getMark().opponent());
+      playTurn(currentPlayer);
+      currentPlayer = getOpponentOf(currentPlayer);
     }
+    showFinalBoard();
+  }
+
+  private Player getOpponentOf(Player current) {
+    return players.get(current.getMark().opponent());
+  }
+
+  private void showFinalBoard() {
+    console.displayBoard(board);
+  }
+
+  private void playTurn(Player player) {
+    console.displayBoard(board);
+    board = player.performMove(board);
   }
 
   public boolean hasWinner() {
-    return true;
+    return board.hasWinner();
   }
 
   public Mark getWinner() {
-    return Mark.O;
+    return board.getWinner();
   }
 }

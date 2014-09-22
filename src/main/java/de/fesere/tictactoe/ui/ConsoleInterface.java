@@ -3,14 +3,10 @@ package de.fesere.tictactoe.ui;
 import de.fesere.tictactoe.Board;
 import de.fesere.tictactoe.Mark;
 import de.fesere.tictactoe.Player;
-import de.fesere.tictactoe.players.AiPlayer;
-import de.fesere.tictactoe.players.HumanPlayer;
+import de.fesere.tictactoe.players.PlayerFactory;
 
 import java.util.Map;
 import java.util.stream.Stream;
-
-import static de.fesere.tictactoe.Mark.O;
-import static de.fesere.tictactoe.Mark.X;
 
 public class ConsoleInterface {
   private IO io;
@@ -52,34 +48,32 @@ public class ConsoleInterface {
     if(!validPlayerChoice(choice)){
       return requestPlayers();
     }
-    return getPlayers(choice);
-  }
-
-  private Player[] getPlayers(Integer choice) {
-    if(choice == 1) {
-      return new Player[] {new HumanPlayer(X), AiPlayer.createAi(O)};
-    }
-    if(choice == 2) {
-      return new Player[] {AiPlayer.createAi(O), new HumanPlayer(X)};
-    }
-    if(choice == 3) {
-      return new Player[] {AiPlayer.createAi(X), AiPlayer.createAi(O)};
-    }
-    return new Player[] {new HumanPlayer(X), new HumanPlayer(O)};
+    return PlayerFactory.getPlayers(choice);
   }
 
   private boolean validPlayerChoice(Integer choice) {
-    return choice != null && choice > 0 && choice < 5;
+    return choice != null && PlayerFactory.validPlayerChoice(choice);
   }
 
   public void announceWinner(Mark winner) {
+    io.write("The winner is " + winner);
   }
 
   public void announceDraw() {
+    io.write("There was a draw");
   }
 
   public boolean requestRematch() {
-    return false;
+    requestReplay();
+    Integer choice = io.readInput();
+    if(!isValidChoice(choice)) {
+      return requestRematch();
+    }
+    return choice == 1;
+  }
+
+  private boolean isValidChoice(Integer choice) {
+    return 0 < choice  && choice < 3;
   }
 
   public Integer requestMove() {

@@ -122,6 +122,10 @@ public class Board {
     return result;
   }
 
+  public Mark getWinner() {
+    return allLines().stream().filter(Line::hasWinner).findFirst().get().first;
+  }
+
   private class Line {
 
     private final Mark first;

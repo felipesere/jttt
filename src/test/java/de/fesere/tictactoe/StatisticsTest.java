@@ -2,14 +2,12 @@ package de.fesere.tictactoe;
 
 import de.fesere.tictactoe.players.AiPlayer;
 import de.fesere.tictactoe.players.RandomPlayer;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static de.fesere.tictactoe.Mark.O;
 import static de.fesere.tictactoe.Mark.X;
 import static junit.framework.Assert.fail;
 
-@Ignore
 public class StatisticsTest {
 
   Player ai     = AiPlayer.createAi(X);
