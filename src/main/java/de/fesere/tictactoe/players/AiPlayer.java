@@ -5,7 +5,7 @@ import de.fesere.tictactoe.Mark;
 import de.fesere.tictactoe.Player;
 
 public class AiPlayer implements Player {
-  private Mark mark;
+  private final Mark mark;
   private AiPlayer opponent;
 
   public static AiPlayer createAi(Mark mark) {

@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GameTest {
 
-  private FakeConsole fakeConsole = new FakeConsole();
+  private final FakeConsole fakeConsole = new FakeConsole();
 
   @Before
   public void setup() {

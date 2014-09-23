@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.not;
 
 public class HumanPlayerTest extends PlayerCommonTest {
 
-  Board emptyBoard = new Board();
+  private final Board emptyBoard = new Board();
 
   @Override
   Player playerForCommonTests() {
@@ -47,7 +47,7 @@ public class HumanPlayerTest extends PlayerCommonTest {
 
   public ConsoleInterface consoleUi(Integer ... items) {
     return new ConsoleInterface() {
-      List<Integer> elements = new LinkedList<>(asList(items));
+      final List<Integer> elements = new LinkedList<>(asList(items));
 
       @Override
       public Integer requestMove() {

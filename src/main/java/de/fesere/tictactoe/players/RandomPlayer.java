@@ -6,7 +6,7 @@ import de.fesere.tictactoe.Player;
 
 public class RandomPlayer implements Player {
 
-  private Mark mark;
+  private final Mark mark;
 
   public RandomPlayer(Mark mark) {
     this.mark = mark;

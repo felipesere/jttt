@@ -11,9 +11,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ConsoleInterfaceTest {
 
-  private Board emptyBoard = new Board();
-  private FakeIO fakeIO = new FakeIO();
-  private ConsoleInterface console = new ConsoleInterface(fakeIO);
+  private final Board emptyBoard = new Board();
+  private final FakeIO fakeIO = new FakeIO();
+  private final ConsoleInterface console = new ConsoleInterface(fakeIO);
 
   @Before
   public void setup() {
@@ -81,6 +81,19 @@ public class ConsoleInterfaceTest {
     assertThat(answer, is(true));
   }
 
+  @Test
+  public void returnsAvalidValueForPlayers() {
+    fakeIO.setInputs(1);
+    int result = console.requestPlayers();
+    assertThat(result, is(1));
+  }
+
+  @Test
+  public void asksAgainIfUserInputsInvalidData() {
+    fakeIO.setInputs(null, 1);
+    int result = console.requestPlayers();
+    assertThat(result, is(1));
+  }
 
   private void expectOutputToBe(String expected) {
     assertThat(fakeIO.getWritten(), is(expected));

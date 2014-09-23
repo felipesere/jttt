@@ -12,8 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class GameRunnerTest {
-  private GameRunner runner = new GameRunner();
-  private FakeConsole fakeConsole = new FakeConsole();
+  private final GameRunner runner = new GameRunner();
+  private final FakeConsole fakeConsole = new FakeConsole();
 
   @Before
   public void setup() {

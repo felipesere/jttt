@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 public class Board {
 
-  private List<Mark> marks;
+  private final List<Mark> marks;
 
   public Board() {
     marks = Collections.nCopies(9, Mark.EMPTY);

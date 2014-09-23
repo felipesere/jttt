@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class FakeIO extends IO {
 
   private String written = "";
-  private LinkedList<Integer> inputs = new LinkedList<>();
+  private final LinkedList<Integer> inputs = new LinkedList<>();
 
   public void reset() {
     written = "";

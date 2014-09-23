@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class ConsoleInterface {
-  private IO io;
+  private final IO io;
 
   public ConsoleInterface(IO io) {
     this.io = io;

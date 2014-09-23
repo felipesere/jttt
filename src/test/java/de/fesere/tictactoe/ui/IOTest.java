@@ -11,7 +11,7 @@ import static org.hamcrest.core.Is.is;
 
 public class IOTest {
 
-  ByteArrayOutputStream baos;
+  private ByteArrayOutputStream baos;
 
   @Test
   public void returnsFoundIntegerInStream() {
