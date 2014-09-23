@@ -19,21 +19,35 @@ public class Game {
   }
 
   public void play() {
+    playAllTurns();
+    showFinalBoard();
+    announceResult();
+  }
+
+  private void playAllTurns() {
     Player currentPlayer = players.get(X);
     while (!board.isFinished()) {
       playTurn(currentPlayer);
       currentPlayer = getOpponentOf(currentPlayer);
     }
-    showFinalBoard();
   }
 
-  public boolean hasWinner() {
+  private void announceResult() {
+    if(hasWinner()) {
+      console.announceWinner(getWinner());
+    } else {
+      console.announceDraw();
+    }
+  }
+
+  private boolean hasWinner() {
     return board.hasWinner();
   }
 
-  public Mark getWinner() {
+  private Mark getWinner() {
     return board.getWinner();
   }
+
 
   private Map<Mark, Player> convertToMap(Player[] players) {
     Map<Mark, Player> result = new HashMap<>();

@@ -2,7 +2,6 @@ package de.fesere.tictactoe.ui;
 
 import de.fesere.tictactoe.Board;
 import de.fesere.tictactoe.Mark;
-import de.fesere.tictactoe.Player;
 import de.fesere.tictactoe.players.PlayerFactory;
 
 import java.util.Map;
@@ -41,14 +40,14 @@ public class ConsoleInterface {
     io.write("Do you want to play again? (1) Yes  (2) No");
   }
 
-  public Player[] requestPlayers() {
+  public int requestPlayers() {
     displayMenu();
     Integer choice = io.readInput();
 
     if(!validPlayerChoice(choice)){
       return requestPlayers();
     }
-    return PlayerFactory.getPlayers(choice);
+    return choice;
   }
 
   private boolean validPlayerChoice(Integer choice) {

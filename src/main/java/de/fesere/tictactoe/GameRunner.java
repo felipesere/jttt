@@ -10,12 +10,6 @@ public class GameRunner {
     while(play) {
       Game game = new Game(consoleInterface, players);
       game.play();
-      if(game.hasWinner()) {
-        consoleInterface.announceWinner(game.getWinner());
-      } else {
-        consoleInterface.announceDraw();
-      }
-
       play = consoleInterface.requestRematch();
     }
   }

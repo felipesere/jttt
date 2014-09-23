@@ -1,10 +1,10 @@
 package de.fesere.tictactoe;
 
-import de.fesere.tictactoe.ui.ConsoleInterface;
-import de.fesere.tictactoe.ui.FakeIO;
+import de.fesere.tictactoe.players.ScriptablePlayer;
+import de.fesere.tictactoe.ui.FakeConsole;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import static de.fesere.tictactoe.Mark.O;
@@ -15,29 +15,30 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GameTest {
 
+  private FakeConsole fakeConsole = new FakeConsole();
+
+  @Before
+  public void setup() {
+    fakeConsole.reset();
+  }
+
   @Test
   public void firstPlayerWins() {
-    Game game = new Game(new ConsoleInterface(new FakeIO()), scriptedPlayer(X, asList(1,2,3)),scriptedPlayer(O, asList(4,5)));
+    Game game = new Game(fakeConsole, scriptedPlayer(X, asList(1,2,3)),
+                                      scriptedPlayer(O, asList(4,5)));
     game.play();
-    assertThat(game.hasWinner(), is(true));
-    assertThat(game.getWinner(), is(X));
+    assertThat(fakeConsole.hasWinner(X), is(true));
+  }
+
+  @Test
+  public void testAnnounceDraw() {
+    Game game = new Game(fakeConsole, scriptedPlayer(X, asList(1, 3, 4, 8, 9)),
+                                      scriptedPlayer(O, asList(2, 5, 6, 7)));
+    game.play();
+    assertThat(fakeConsole.hasDraw(), is(true));
   }
 
   public Player scriptedPlayer(Mark mark, List<Integer> inputMoves) {
-    return new Player() {
-
-      List<Integer> moveList = new LinkedList<>(inputMoves);
-
-      @Override
-      public Board performMove(Board board) {
-        int move = moveList.remove(0);
-        return board.nextBoardFor(move, mark);
-      }
-
-      @Override
-      public Mark getMark() {
-        return mark;
-      }
-    };
+    return new ScriptablePlayer(mark, inputMoves);
   }
 }
