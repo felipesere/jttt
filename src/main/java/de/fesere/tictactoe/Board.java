@@ -126,6 +126,10 @@ public class Board {
     return allLines().stream().filter(Line::hasWinner).findFirst().get().first;
   }
 
+  public boolean isWinner(Mark player) {
+    return allLines().stream().anyMatch(line -> line.isWinner(player));
+  }
+
   private class Line {
 
     private final Mark first;
@@ -144,6 +148,10 @@ public class Board {
 
     private boolean allSame() {
       return first == second && second == third;
+    }
+
+    public boolean isWinner(Mark player) {
+      return allSame() && first == player;
     }
   }
 }
