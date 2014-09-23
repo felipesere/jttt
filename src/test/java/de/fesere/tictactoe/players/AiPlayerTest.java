@@ -29,6 +29,7 @@ public class AiPlayerTest extends PlayerCommonTest {
   Player playerForCommonTests() {
     return AiPlayer.createAi(X);
   }
+
   @Test
   public void makesDirectWinningMove(){
     Board board = new Board(asList(X, X, EMPTY,
@@ -39,7 +40,7 @@ public class AiPlayerTest extends PlayerCommonTest {
   }
 
   @Test
-  public void forcesOponentsHandVersion1(){
+  public void forcesOpponentsHandVersion1(){
     Board board = new Board(asList(O,     EMPTY, EMPTY,
                                    EMPTY, O,     EMPTY,
                                    EMPTY, EMPTY, X));
@@ -48,7 +49,7 @@ public class AiPlayerTest extends PlayerCommonTest {
   }
 
   @Test
-  public void forcesOponentsHandVersion2(){
+  public void forcesOpponentsHandVersion2(){
     Board board = new Board(asList(O,     EMPTY, EMPTY,
                                    EMPTY, X,     EMPTY,
                                    EMPTY, EMPTY, O));
@@ -83,5 +84,4 @@ public class AiPlayerTest extends PlayerCommonTest {
       }
     };
   }
-
 }

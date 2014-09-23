@@ -7,9 +7,8 @@ import org.junit.Test;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static de.fesere.tictactoe.Mark.X;
+import static de.fesere.tictactoe.Mark.*;
 import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -33,10 +32,6 @@ public class BoardTest {
     assertThat(marks(board).allMatch(Mark::isEmpty), is(true));
   }
 
-  private Stream<Mark> marks(Board board) {
-    return board.getMarks().values().stream();
-  }
-
   @Test
   public void makingAMoveReducesTheNumberOfPossibleMoves() {
     List<Integer> moves = board.getPossibleMoves();
@@ -46,8 +41,8 @@ public class BoardTest {
 
   @Test
   public void markingAMoveIsReflectedInMarks() {
-    Board newBoard = board.nextBoardFor(1, Mark.O);
-    assertThat(newBoard.getMarks().get(1), is(Mark.O));
+    Board newBoard = board.nextBoardFor(1, O);
+    assertThat(newBoard.getMarks().get(1), is(O));
     assertThat(marks(newBoard).filter(Mark::isEmpty).count(), is(8L));
   }
 
@@ -56,68 +51,80 @@ public class BoardTest {
     board.nextBoardFor(0, X).nextBoardFor(0, X);
   }
 
-  protected Board fromString(List<String> marks) {
-    return new Board(convert(marks));
-  }
-
-  private List<Mark> convert(List<String> marks) {
-    return marks.stream().map(this::convert).collect(toList());
-  }
-
-  public Mark convert(String mark) {
-    if (mark.equals("")) {
-      return Mark.EMPTY;
-    } else {
-      return Mark.valueOf(mark);
-    }
-  }
-
   @Test
   public void doesNotHaveAWinner() {
-    Board board = fromString(asList("", "X", "X", "", "", "", "", "", ""));
-    assertThat(board.hasWinner(), is(false));
+    Board board = new Board(asList(EMPTY,     X,     X,
+                                   EMPTY, EMPTY, EMPTY,
+                                   EMPTY, EMPTY, EMPTY));
+    noWinner(board);
   }
+
 
   @Test
   public void aWinnerIsThreeOftheSameKind() {
-    Board board = fromString(asList("X", "X", "X", "", "", "", "", "", ""));
-    assertThat(board.hasWinner(), is(true));
+    Board board = new Board(asList(X,     X,     X,
+                                   EMPTY, EMPTY, EMPTY,
+                                   EMPTY, EMPTY, EMPTY));
+    hasWinner(board);
   }
 
   @Test
   public void mixedRowHasNoWinner() {
-    Board board = fromString(asList("O", "X", "X", "", "", "", "", "", ""));
-    assertThat(board.hasWinner(), is(false));
+    Board board = new Board(asList(O,     X,     X,
+                                   EMPTY, EMPTY, EMPTY,
+                                   EMPTY, EMPTY, EMPTY));
+    noWinner(board);
   }
 
   @Test
   public void aWinnerInTheFirstColumn() {
-    Board board = fromString(asList("X", "", "", "X", "", "", "X", "", ""));
-    assertThat(board.hasWinner(), is(true));
+    Board board = new Board(asList(X, EMPTY, EMPTY,
+                                   X, EMPTY, EMPTY,
+                                   X, EMPTY, EMPTY));
+    hasWinner(board);
   }
 
   @Test
   public void mixedColumnHasNoWinner() {
-    Board board = fromString(asList("O", "", "", "X", "", "", "X", "", ""));
-    assertThat(board.hasWinner(), is(false));
+    Board board = new Board(asList(O, EMPTY, EMPTY,
+                                   X, EMPTY, EMPTY,
+                                   X, EMPTY, EMPTY));
+    noWinner(board);
   }
 
   @Test
   public void aWinnerInFirstDiagonal() {
-    Board board = fromString(asList("X", "", "", "", "X", "", "", "", "X"));
-    assertThat(board.hasWinner(), is(true));
+    Board board = new Board(asList(X,     EMPTY, EMPTY,
+                                   EMPTY, X,     EMPTY,
+                                   EMPTY, EMPTY, X));
+    hasWinner(board);
   }
 
   @Test
   public void mixedDiagonalHasNoWinner() {
-    Board board = fromString(asList("O", "", "", "", "X", "", "", "", "X"));
-    assertThat(board.hasWinner(), is(false));
+    Board board = new Board(asList(O,     EMPTY, EMPTY,
+                                   EMPTY, X,     EMPTY,
+                                   EMPTY, EMPTY, X));
+    noWinner(board);
   }
 
   @Test
   public void aWinnerInSecondDiagonal() {
-    Board board = fromString(asList("", "", "X", "", "X", "", "X", "", ""));
+    Board board = new Board(asList(EMPTY, EMPTY, X,
+                                   EMPTY, X,     EMPTY,
+                                   X,     EMPTY, EMPTY));
+    hasWinner(board);
+  }
+
+  private void hasWinner(Board board) {
     assertThat(board.hasWinner(), is(true));
   }
-}
 
+  private void noWinner(Board board) {
+    assertThat(board.hasWinner(), is(false));
+  }
+
+  private Stream<Mark> marks(Board board) {
+    return board.getMarks().values().stream();
+  }
+}

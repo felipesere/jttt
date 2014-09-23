@@ -10,8 +10,8 @@ public class IO {
   public IO() {
     this(System.in, System.out);
   }
-  public IO(InputStream stream, PrintStream output) {
 
+  public IO(InputStream stream, PrintStream output) {
     this.stream = new BufferedReader(new InputStreamReader(stream));
     this.output = output;
   }

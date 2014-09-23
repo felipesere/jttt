@@ -28,6 +28,7 @@ public class ConsoleInterfaceTest {
   public void setup() {
     accessibleIO.reset();
   }
+
   @Test
   public void canPrintABoardAnEmpty() {
     console.displayBoard(emptyBoard);
@@ -36,9 +37,9 @@ public class ConsoleInterfaceTest {
 
   @Test
   public void canPrintABoardWithASingleMarker() {
-    Board newBoard = emptyBoard.nextBoardFor(1, O);
+    Board newBoard = emptyBoard.nextBoardFor(1, X);
     console.displayBoard(newBoard);
-    expectOutputToBe("[O][2][3]\n[4][5][6]\n[7][8][9]\n");
+    expectOutputToBe("[X][2][3]\n[4][5][6]\n[7][8][9]\n");
   }
 
   @Test
@@ -46,18 +47,6 @@ public class ConsoleInterfaceTest {
     Board newBoard = emptyBoard.nextBoardFor(1, O).nextBoardFor(5, X);
     console.displayBoard(newBoard);
     expectOutputToBe("[O][2][3]\n[4][X][6]\n[7][8][9]\n");
-  }
-
-  @Test
-  public void canPrintAMenuWithFourPlayerCombinations() {
-   console.displayMenu();
-   expectOutputToBe("Choose game:\n(1) Human vs. Computer\n(2) Computer vs. Human\n(3) Computer vs. Computer\n(4) Human vs. Human");
-  }
-
-  @Test
-  public void canRequestThePlayerToPlayAgain() {
-    console.requestReplay();
-    expectOutputToBe("Do you want to play again? (1) Yes  (2) No");
   }
 
   @Test

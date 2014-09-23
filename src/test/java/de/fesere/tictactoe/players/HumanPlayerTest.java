@@ -25,7 +25,7 @@ public class HumanPlayerTest extends PlayerCommonTest {
   }
 
   @Test
-  public void deniesNullasInvalidMoveReadsAgain() {
+  public void deniesNullAsInvalidMoveReadsAgain() {
    Player player = new HumanPlayer(O, consoleUi(null, 1));
    Board newBoard = player.performMove(emptyBoard);
    assertThat(newBoard.getPossibleMoves(), not(hasItem(1)));

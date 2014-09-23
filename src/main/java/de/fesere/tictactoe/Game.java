@@ -9,15 +9,13 @@ import static de.fesere.tictactoe.Mark.X;
 
 public class Game {
 
-  private Map<Mark, Player> players = new HashMap<>();
-  ConsoleInterface console;
-  Board board = new Board();
+  private final Map<Mark, Player> players;
+  private final ConsoleInterface console;
+  private Board board = new Board();
 
   public Game(ConsoleInterface console, Player... players) {
     this.console = console;
-    for(Player player : players) {
-      this.players.put(player.getMark(), player);
-    }
+    this.players = convertToMap(players);
   }
 
   public void play() {
@@ -27,6 +25,22 @@ public class Game {
       currentPlayer = getOpponentOf(currentPlayer);
     }
     showFinalBoard();
+  }
+
+  public boolean hasWinner() {
+    return board.hasWinner();
+  }
+
+  public Mark getWinner() {
+    return board.getWinner();
+  }
+
+  private Map<Mark, Player> convertToMap(Player[] players) {
+    Map<Mark, Player> result = new HashMap<>();
+    for(Player player : players) {
+      result.put(player.getMark(), player);
+    }
+    return result;
   }
 
   private Player getOpponentOf(Player current) {
@@ -40,13 +54,5 @@ public class Game {
   private void playTurn(Player player) {
     console.displayBoard(board);
     board = player.performMove(board);
-  }
-
-  public boolean hasWinner() {
-    return board.hasWinner();
-  }
-
-  public Mark getWinner() {
-    return board.getWinner();
   }
 }

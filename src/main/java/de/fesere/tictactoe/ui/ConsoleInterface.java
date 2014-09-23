@@ -73,7 +73,7 @@ public class ConsoleInterface {
   }
 
   private boolean isValidChoice(Integer choice) {
-    return 0 < choice  && choice < 3;
+    return choice != null && 0 < choice  && choice < 3;
   }
 
   public Integer requestMove() {

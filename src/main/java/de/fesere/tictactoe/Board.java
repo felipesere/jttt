@@ -30,7 +30,7 @@ public class Board {
   }
 
   private List<Integer> possibleMoves() {
-    return IntegerList(allIndizes()
+    return IntegerList(allIndices()
              .filter(i -> marks.get(i).isEmpty())
              .map(i -> i + 1));
   }
@@ -47,7 +47,7 @@ public class Board {
     return getPossibleMoves().isEmpty();
   }
 
-  private IntStream allIndizes() {
+  private IntStream allIndices() {
     return IntStream.range(0, marks.size());
   }
 
