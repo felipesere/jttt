@@ -29,7 +29,6 @@ public class AiPlayerTest extends PlayerCommonTest {
   Player playerForCommonTests() {
     return AiPlayer.createAi(X);
   }
-
   @Test
   public void makesDirectWinningMove(){
     Board board = new Board(asList(X, X, EMPTY,
@@ -40,7 +39,7 @@ public class AiPlayerTest extends PlayerCommonTest {
   }
 
   @Test
-  public void forcesOpponentsHandVersion1(){
+  public void forcesOponentsHandVersion1(){
     Board board = new Board(asList(O,     EMPTY, EMPTY,
                                    EMPTY, O,     EMPTY,
                                    EMPTY, EMPTY, X));
@@ -49,7 +48,7 @@ public class AiPlayerTest extends PlayerCommonTest {
   }
 
   @Test
-  public void forcesOpponentsHandVersion2(){
+  public void forcesOponentsHandVersion2(){
     Board board = new Board(asList(O,     EMPTY, EMPTY,
                                    EMPTY, X,     EMPTY,
                                    EMPTY, EMPTY, O));
@@ -63,7 +62,7 @@ public class AiPlayerTest extends PlayerCommonTest {
                                    O,         X, EMPTY,
                                    EMPTY, EMPTY, EMPTY));
     Board result = player.performMove(board);
-    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(1, 3, 7, 8));
+    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(0, 2, 6, 7));
   }
 
   private Matcher<List<Integer>> madeOneOfTheseMoves(int... numbers) {
@@ -84,4 +83,5 @@ public class AiPlayerTest extends PlayerCommonTest {
       }
     };
   }
+
 }

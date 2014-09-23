@@ -36,7 +36,7 @@ public class AiPlayer implements Player {
     int best_score = -Integer.MAX_VALUE;
     for(int move : board.getPossibleMoves()) {
       Board newBoard = board.nextBoardFor(move, mark);
-      int score = -opponent.alpha_beta(newBoard, -Integer.MAX_VALUE, Integer.MAX_VALUE);
+      int score = -opponent.alpha_beta(newBoard, -Integer.MAX_VALUE, Integer.MAX_VALUE, mark);
       if(score > best_score) {
         best_move = move;
         best_score = score;
@@ -45,9 +45,13 @@ public class AiPlayer implements Player {
     return best_move;
   }
 
-  private int alpha_beta(Board board, int alpha, int beta) {
+  private int alpha_beta(Board board, int alpha, int beta, Mark mark) {
     if(board.isFinished()) {
-      return -board.getScore();
+      if(mark == this.mark) {
+        return board.getScore();
+      } else {
+        return -board.getScore();
+      }
     }
     else {
       return calculateBestScore(board, alpha, beta);
@@ -58,7 +62,7 @@ public class AiPlayer implements Player {
     int score;
     for(int move : board.getPossibleMoves() ) {
       Board newBoard = board.nextBoardFor(move, mark);
-      score = -opponent.alpha_beta(newBoard, -beta, -alpha);
+      score = -opponent.alpha_beta(newBoard, -beta, -alpha, mark);
       alpha = Math.max(alpha, score);
       if(alpha >= beta) {
         break;

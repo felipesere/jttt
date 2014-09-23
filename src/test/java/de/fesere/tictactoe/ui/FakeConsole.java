@@ -6,8 +6,11 @@ public class FakeConsole extends ConsoleInterface {
   public FakeConsole() {
     super(new FakeIO());
   }
+
   private Mark winnner = null;
   private boolean draw = false;
+  private int Xwins = 0;
+  private int Owins = 0;
 
   public void reset() {
     winnner = null;
@@ -17,6 +20,11 @@ public class FakeConsole extends ConsoleInterface {
   @Override
   public void announceWinner(Mark winner) {
     this.winnner = winner;
+    if (winner == Mark.X) {
+      Xwins++;
+    } else {
+      Owins++;
+    }
   }
 
   @Override
@@ -34,6 +42,15 @@ public class FakeConsole extends ConsoleInterface {
   }
 
   public boolean hasDraw() {
-   return draw;
+    return draw;
+  }
+
+
+  public int getXwins() {
+    return Xwins;
+  }
+
+  public int getOwins() {
+    return Owins;
   }
 }
