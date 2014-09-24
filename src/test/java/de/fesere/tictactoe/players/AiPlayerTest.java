@@ -39,7 +39,7 @@ public class AiPlayerTest extends PlayerCommonTest {
   }
 
   @Test
-  public void forcesOponentsHandVersion1(){
+  public void takesCorners(){
     Board board = new Board(asList(O,     EMPTY, EMPTY,
                                    EMPTY, O,     EMPTY,
                                    EMPTY, EMPTY, X));
@@ -48,7 +48,7 @@ public class AiPlayerTest extends PlayerCommonTest {
   }
 
   @Test
-  public void forcesOponentsHandVersion2(){
+  public void takesEdges(){
     Board board = new Board(asList(O,     EMPTY, EMPTY,
                                    EMPTY, X,     EMPTY,
                                    EMPTY, EMPTY, O));
@@ -57,12 +57,12 @@ public class AiPlayerTest extends PlayerCommonTest {
   }
 
   @Test
-  public void forcesOponentsHandVersion3(){
+  public void itakesLeftOrTopEdge(){
     Board board = new Board(asList(EMPTY,     O, EMPTY,
                                    O,         X, EMPTY,
                                    EMPTY, EMPTY, EMPTY));
     Board result = player.performMove(board);
-    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(0, 2, 6, 7));
+    assertThat(result.getPossibleMoves(), madeOneOfTheseMoves(1, 2, 7));
   }
 
   private Matcher<List<Integer>> madeOneOfTheseMoves(int... numbers) {

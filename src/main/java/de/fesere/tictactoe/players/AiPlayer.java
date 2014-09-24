@@ -4,11 +4,11 @@ import de.fesere.tictactoe.Board;
 import de.fesere.tictactoe.Mark;
 import de.fesere.tictactoe.Player;
 
-import static java.lang.Integer.MAX_VALUE;
-import static java.lang.Integer.MIN_VALUE;
-
 public class AiPlayer implements Player {
   private Mark mark;
+
+  private final static int MIN_VALUE = -10;
+  private final static int MAX_VALUE =  10;
 
   public static AiPlayer createAi(Mark mark) {
     return new AiPlayer(mark);
@@ -60,7 +60,7 @@ public class AiPlayer implements Player {
   }
 
   private int calculateBestScore(Board board, int alpha, int beta, Mark player) {
-    int score;
+    int score = 0;
     for (int move : board.getPossibleMoves()) {
       Board newBoard = board.nextBoardFor(move, player);
       score = -alpha_beta(newBoard, -beta, -alpha, player.opponent());
@@ -69,6 +69,6 @@ public class AiPlayer implements Player {
         break;
       }
     }
-    return alpha;
+    return score;
   }
 }
