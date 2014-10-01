@@ -13,13 +13,13 @@ public class PlayerFactory {
 
   public static Player[] getPlayers(int choice) {
     if(choice == 1) {
-      return new Player[] {new HumanPlayer(X), AiPlayer.createAi(O)};
+      return new Player[] {new HumanPlayer(X), new AiPlayer(O)};
     }
     if(choice == 2) {
-      return new Player[] {AiPlayer.createAi(O), new HumanPlayer(X)};
+      return new Player[] {new AiPlayer(X), new HumanPlayer(O)};
     }
     if(choice == 3) {
-      return new Player[] {AiPlayer.createAi(X), AiPlayer.createAi(O)};
+      return new Player[] {new AiPlayer(X), new AiPlayer(O)};
     }
     return new Player[] {new HumanPlayer(X), new HumanPlayer(O)};
   }

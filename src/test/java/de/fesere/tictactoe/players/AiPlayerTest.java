@@ -27,7 +27,7 @@ public class AiPlayerTest extends PlayerCommonTest {
 
   @Override
   Player playerForCommonTests() {
-    return AiPlayer.createAi(X);
+    return new AiPlayer(X);
   }
   @Test
   public void makesDirectWinningMove(){

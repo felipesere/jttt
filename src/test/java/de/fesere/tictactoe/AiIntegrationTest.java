@@ -15,7 +15,7 @@ public class AiIntegrationTest {
 
   @Test
   public void unbeatableTest() {
-    Player ai     = AiPlayer.createAi(X);
+    Player ai     = new AiPlayer(X);
     Player random = new RandomPlayer(O);
 
     FakeConsole consoleInterface = new FakeConsole();

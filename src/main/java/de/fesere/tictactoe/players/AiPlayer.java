@@ -8,10 +8,6 @@ public class AiPlayer implements Player {
 
   private Mark mark;
 
-  public static Player createAi(Mark mark) {
-    return new AiPlayer(mark);
-  }
-
   public AiPlayer(Mark mark) {
     this.mark = mark;
   }
