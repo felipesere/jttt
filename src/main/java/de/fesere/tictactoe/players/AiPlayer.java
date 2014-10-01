@@ -24,12 +24,17 @@ public class AiPlayer implements Player {
 
   private RatedMove negamax(Board board, int alpha, int beta, Mark mark) {
     int bestMove = -1;
-    int bestScore = -10;
 
     if (board.isFinished()) {
       return new RatedMove(valueOfBoard(board, mark), bestMove);
+    } else {
+      return getRatedMove(board, alpha, beta, mark);
     }
+  }
 
+  private RatedMove getRatedMove(Board board, int alpha, int beta, Mark mark) {
+    int bestMove = -1;
+    int bestScore = alpha;
     for(int move : board.getPossibleMoves()) {
       Board newBoard = board.nextBoardFor(move, mark);
       int score = -negamax(newBoard, -beta, -alpha, mark.opponent()).score;
@@ -44,7 +49,6 @@ public class AiPlayer implements Player {
         break;
       }
     }
-
     return new RatedMove(bestScore, bestMove);
   }
 
