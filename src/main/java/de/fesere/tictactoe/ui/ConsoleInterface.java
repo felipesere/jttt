@@ -79,16 +79,4 @@ public class ConsoleInterface {
     io.write("Please enter a move number: ");
     return io.readInput();
   }
-
-  private class Template {
-    private String template = "[1][2][3]\n[4][5][6]\n[7][8][9]\n";
-
-    public void add(int location, String symbol) {
-      template = template.replaceFirst(""+location, symbol);
-    }
-
-    public String get() {
-      return template;
-    }
-  }
 }

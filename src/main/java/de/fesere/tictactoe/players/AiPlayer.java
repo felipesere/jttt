@@ -5,23 +5,61 @@ import de.fesere.tictactoe.Mark;
 import de.fesere.tictactoe.Player;
 
 public class AiPlayer implements Player {
+
   private Mark mark;
 
-  private final static int MIN_VALUE = -10;
-  private final static int MAX_VALUE =  10;
-
-  public static AiPlayer createAi(Mark mark) {
+  public static Player createAi(Mark mark) {
     return new AiPlayer(mark);
   }
 
-  private AiPlayer(Mark mark) {
+  public AiPlayer(Mark mark) {
     this.mark = mark;
   }
 
   @Override
   public Board performMove(Board board) {
-    int move = selectMove(board);
-    return board.nextBoardFor(move, mark);
+    int bestMove = bestMove(board);
+    return board.nextBoardFor(bestMove, mark);
+  }
+
+  private int bestMove(Board board) {
+    return negamax(board, -10, 10, mark).location;
+  }
+
+  private RatedMove negamax(Board board, int alpha, int beta, Mark mark) {
+    int bestMove = -1;
+    int bestScore = -10;
+
+    if (board.isFinished()) {
+      return new RatedMove(valueOfBoard(board, mark), bestMove);
+    }
+
+    for(int move : board.getPossibleMoves()) {
+      Board newBoard = board.nextBoardFor(move, mark);
+      int score = -negamax(newBoard, -beta, -alpha, mark.opponent()).score;
+
+      if(score > bestScore) {
+        bestScore = score;
+        bestMove = move;
+      }
+
+      alpha = Math.max(score, alpha);
+      if(alpha >= beta) {
+        break;
+      }
+    }
+
+    return new RatedMove(bestScore, bestMove);
+  }
+
+  private int valueOfBoard(Board board, Mark mark) {
+    if (board.isWinner(mark)) {
+      return board.getScore();
+    } else if (board.isWinner(mark.opponent())) {
+      return -board.getScore();
+    } else {
+      return 0;
+    }
   }
 
   @Override
@@ -29,46 +67,13 @@ public class AiPlayer implements Player {
     return mark;
   }
 
-  private int selectMove(Board board) {
-    int best_move = 0;
-    int best_score = MIN_VALUE;
-    for (int move : board.getPossibleMoves()) {
-      Board newBoard = board.nextBoardFor(move, mark);
-      int score = -alpha_beta(newBoard, MIN_VALUE, MAX_VALUE, mark.opponent());
-      if (score > best_score) {
-        best_move = move;
-        best_score = score;
-      }
-    }
-    return best_move;
-  }
+  private class RatedMove {
+    public final int score;
+    public final int location;
 
-  private int alpha_beta(Board board, int alpha, int beta, Mark player) {
-    if (board.isFinished()) {
-      return valueOfBoard(board, player);
-    } else {
-      return calculateBestScore(board, alpha, beta, player);
+    public RatedMove(int score, int location) {
+      this.score = score;
+      this.location = location;
     }
-  }
-
-  private int valueOfBoard(Board board, Mark player) {
-    if (board.isWinner(player)) {
-      return board.getScore();
-    } else {
-      return -board.getScore();
-    }
-  }
-
-  private int calculateBestScore(Board board, int alpha, int beta, Mark player) {
-    int score = 0;
-    for (int move : board.getPossibleMoves()) {
-      Board newBoard = board.nextBoardFor(move, player);
-      score = -alpha_beta(newBoard, -beta, -alpha, player.opponent());
-      alpha = Math.max(alpha, score);
-      if (alpha >= beta) {
-        break;
-      }
-    }
-    return score;
   }
 }
