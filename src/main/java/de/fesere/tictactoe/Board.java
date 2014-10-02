@@ -29,9 +29,7 @@ public class Board {
   }
 
   public List<Integer> getPossibleMoves() {
-    return IntegerList(allIndices()
-            .filter(i -> marks.get(i).isEmpty())
-            .map(i -> i + 1));
+    return IntegerList(allIndices().filter(i -> marks.get(i).isEmpty()).map(i -> i + 1));
   }
 
   public boolean hasWinner() {
@@ -122,7 +120,7 @@ public class Board {
   }
 
   public PlayerMark getWinner() {
-    return allLines().stream().filter(Line::hasWinner).findFirst().get().first;
+    return allLines().stream().filter(Line::hasWinner).findFirst().get().getWinner();
   }
 
   public boolean isWinner(PlayerMark player) {
@@ -135,26 +133,31 @@ public class Board {
 
   private class Line {
 
-    private final PlayerMark first;
-    private final PlayerMark second;
-    private final PlayerMark third;
+    private final List<PlayerMark> lineMarks;
 
     public Line(List<PlayerMark> elements){
-      first  = elements.get(0);
-      second = elements.get(1);
-      third  = elements.get(2);
+      lineMarks = new LinkedList<>(elements);
     }
 
     public boolean hasWinner() {
-      return allSame() && !first.isEmpty();
+      return allSame() && !lineMarks.get(0).isEmpty();
     }
 
     private boolean allSame() {
-      return first == second && second == third;
+      return lineMarks.stream().allMatch(mark -> mark.equals(lineMarks.get(0)));
     }
 
     public boolean isWinner(PlayerMark player) {
-      return allSame() && first == player;
+      return lineMarks.stream().allMatch(mark -> mark == player);
+    }
+
+    public PlayerMark getWinner() {
+      if(hasWinner()) {
+        return lineMarks.get(0);
+      } else {
+        return null;
+      }
+
     }
   }
 }

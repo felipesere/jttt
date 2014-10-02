@@ -3,6 +3,7 @@ package de.fesere.tictactoe;
 import de.fesere.tictactoe.players.AiPlayer;
 import de.fesere.tictactoe.players.RandomPlayer;
 import de.fesere.tictactoe.ui.FakeConsole;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static de.fesere.tictactoe.PlayerMark.O;
@@ -13,6 +14,7 @@ import static org.hamcrest.core.Is.is;
 public class AiIntegrationTest {
 
 
+  @Ignore
   @Test
   public void unbeatableTest() {
     Player ai     = new AiPlayer(X);
