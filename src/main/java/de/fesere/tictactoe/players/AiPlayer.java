@@ -26,7 +26,7 @@ public class AiPlayer implements Player {
     int bestScore = -10;
     for(int move : shuffledMoves(board)) {
       Board newBoard = board.nextBoardFor(move, mark);
-      int score = -negamax(newBoard,-10, 10, mark.opponent());
+      int score = -negamax(newBoard,bestScore, 10, mark.opponent());
 
       if(score > bestScore) {
         bestScore = score;
@@ -37,17 +37,14 @@ public class AiPlayer implements Player {
   }
 
   private int negamax(Board board, int alpha, int beta, Mark mark) {
-    int bestMove = -1;
-
     if (board.isFinished()) {
       return valueOfBoard(board, mark);
     } else {
-      return getRatedMove(board, alpha, beta, mark);
+      return scoreUnfinishedBoard(board, alpha, beta, mark);
     }
   }
 
-  private int getRatedMove(Board board, int alpha, int beta, Mark mark) {
-    int bestMove = -1;
+  private int scoreUnfinishedBoard(Board board, int alpha, int beta, Mark mark) {
     int bestScore = alpha;
     for(int move : shuffledMoves(board)) {
       Board newBoard = board.nextBoardFor(move, mark);
@@ -55,7 +52,6 @@ public class AiPlayer implements Player {
 
       if(score > bestScore) {
         bestScore = score;
-        bestMove = move;
       }
 
       alpha = Math.max(score, alpha);
@@ -69,10 +65,8 @@ public class AiPlayer implements Player {
   private int valueOfBoard(Board board, Mark mark) {
     if (board.isWinner(mark)) {
       return board.getScore();
-    } else if (board.isWinner(mark.opponent())) {
-      return -board.getScore();
     } else {
-      return 0;
+      return -board.getScore();
     }
   }
 
@@ -85,15 +79,5 @@ public class AiPlayer implements Player {
   @Override
   public Mark getMark() {
     return mark;
-  }
-
-  private class RatedMove {
-    public final int score;
-    public final int location;
-
-    public RatedMove(int score, int location) {
-      this.score = score;
-      this.location = location;
-    }
   }
 }
