@@ -44,8 +44,9 @@ public class Console {
     displayMenu();
     Integer choice = io.readInput();
 
-    if(!validPlayerChoice(choice)){
-      return requestPlayers();
+    while(!validPlayerChoice(choice)) {
+      displayMenu();
+      choice = io.readInput();
     }
     return choice;
   }
@@ -65,8 +66,9 @@ public class Console {
   public boolean requestRematch() {
     requestReplay();
     Integer choice = io.readInput();
-    if(!isValidChoice(choice)) {
-      return requestRematch();
+    while(!isValidChoice(choice)) {
+      requestReplay();
+      choice = io.readInput();
     }
     return choice == 1;
   }
