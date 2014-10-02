@@ -34,6 +34,6 @@ public class HumanPlayer implements Player {
   }
 
   private boolean invalidMove(Integer move, Board board) {
-    return move == null || !board.getPossibleMoves().contains(move);
+    return move == null || !board.validMove(move);
   }
 }
