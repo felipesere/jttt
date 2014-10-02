@@ -37,6 +37,21 @@ public class Board4x4Test {
     assertThat(newBoard.isFinished(), is(true));
   }
 
+  @Test
+  public void hasWinnerInFirstDiagonal() {
+    Board newBoard = makeMoves(1, 6, 11, 16);
+    assertThat(newBoard.hasWinner(), is(true));
+    assertThat(newBoard.isWinner(X), is(true));
+    assertThat(newBoard.isFinished(), is(true));
+  }
+
+  @Test
+  public void hasWinnerInFirstColumn() {
+    Board newBoard = makeMoves(1, 5, 9, 13);
+    assertThat(newBoard.hasWinner(), is(true));
+    assertThat(newBoard.isWinner(X), is(true));
+    assertThat(newBoard.isFinished(), is(true));
+  }
   private Board makeMoves(int ... moves) {
     Board result = board;
     for(int move : moves) {

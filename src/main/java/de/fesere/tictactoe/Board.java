@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.*;
 
 public class Board {
 
@@ -51,7 +52,7 @@ public class Board {
   }
 
   private IntStream allIndices() {
-    return IntStream.range(0, marks.size());
+    return range(0, marks.size());
   }
 
   private List<Integer> IntegerList(IntStream input) {
@@ -85,27 +86,27 @@ public class Board {
 
   private List<Line> getColumns() {
     List<Line> columns = new LinkedList<>();
-    for (int column = 0; column < sideSize; column++) {
+    range(0, sideSize).forEach(column -> {
       columns.add(new Line(getColumn(column)));
-    }
+    });
     return columns;
   }
 
   private List<PlayerMark> getColumn(int column) {
     List<PlayerMark> elements = new LinkedList<>();
-    for (int offset = 0; offset < sideSize; offset++) {
-      elements.add(marks.get(column+offset*sideSize));
-    }
+    range(0, sideSize).forEach(offset -> {
+      elements.add(marks.get(column + offset * sideSize));
+    });
     return elements;
   }
 
   private List<Line> getDiagonals() {
     List<PlayerMark> topLeft = new LinkedList<>();
     List<PlayerMark> topRight = new LinkedList<>();
-    for (int i = 0; i < sideSize; i++) {
+    range(0, sideSize).forEach(i -> {
       topLeft.add(marks.get(i * (sideSize + 1)));
       topRight.add(marks.get((i + 1) * (sideSize - 1)));
-    }
+    });
     return asList(new Line(topLeft), new Line(topRight));
   }
 
@@ -134,35 +135,5 @@ public class Board {
 
   public boolean validMove(int move) {
     return getPossibleMoves().contains(move);
-  }
-
-  private class Line {
-
-    private final List<PlayerMark> lineMarks;
-
-    public Line(List<PlayerMark> elements) {
-      lineMarks = new LinkedList<>(elements);
-    }
-
-    public boolean hasWinner() {
-      return allSame() && !lineMarks.get(0).isEmpty();
-    }
-
-    private boolean allSame() {
-      return lineMarks.stream().allMatch(mark -> mark.equals(lineMarks.get(0)));
-    }
-
-    public boolean isWinner(PlayerMark player) {
-      return lineMarks.stream().allMatch(mark -> mark == player);
-    }
-
-    public PlayerMark getWinner() {
-      if (hasWinner()) {
-        return lineMarks.get(0);
-      } else {
-        return null;
-      }
-
-    }
   }
 }
