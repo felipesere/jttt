@@ -4,6 +4,9 @@ import de.fesere.tictactoe.Board;
 import de.fesere.tictactoe.Mark;
 import de.fesere.tictactoe.Player;
 
+import java.util.Collections;
+import java.util.List;
+
 public class AiPlayer implements Player {
 
   private Mark mark;
@@ -35,7 +38,7 @@ public class AiPlayer implements Player {
   private RatedMove getRatedMove(Board board, int alpha, int beta, Mark mark) {
     int bestMove = -1;
     int bestScore = alpha;
-    for(int move : board.getPossibleMoves()) {
+    for(int move : shuffledMoves(board)) {
       Board newBoard = board.nextBoardFor(move, mark);
       int score = -negamax(newBoard, -beta, -alpha, mark.opponent()).score;
 
@@ -60,6 +63,12 @@ public class AiPlayer implements Player {
     } else {
       return 0;
     }
+  }
+
+  private List<Integer> shuffledMoves(Board board) {
+    List<Integer> result = board.getPossibleMoves();
+    Collections.shuffle(result);
+    return result;
   }
 
   @Override

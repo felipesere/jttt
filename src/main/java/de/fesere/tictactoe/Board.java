@@ -25,7 +25,6 @@ public class Board {
 
   public List<Integer> getPossibleMoves() {
     List<Integer> moves = possibleMoves();
-    Collections.shuffle(moves);
     return moves;
   }
 

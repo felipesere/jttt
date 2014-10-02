@@ -2,10 +2,11 @@ package de.fesere.tictactoe.ui;
 
 import de.fesere.tictactoe.Board;
 import de.fesere.tictactoe.Mark;
-import de.fesere.tictactoe.players.PlayerFactory;
 
 import java.util.Map;
 import java.util.stream.Stream;
+
+import static de.fesere.tictactoe.players.PlayerFactory.validPlayerChoice;
 
 public class Console {
   private final IO io;
@@ -44,15 +45,11 @@ public class Console {
     displayMenu();
     Integer choice = io.readInput();
 
-    while(!validPlayerChoice(choice)) {
+    while(choice == null || !validPlayerChoice(choice)) {
       displayMenu();
       choice = io.readInput();
     }
     return choice;
-  }
-
-  private boolean validPlayerChoice(Integer choice) {
-    return choice != null && PlayerFactory.validPlayerChoice(choice);
   }
 
   public void announceWinner(Mark winner) {
@@ -66,15 +63,15 @@ public class Console {
   public boolean requestRematch() {
     requestReplay();
     Integer choice = io.readInput();
-    while(!isValidChoice(choice)) {
+    while(choice == null || !isValidChoice(choice)) {
       requestReplay();
       choice = io.readInput();
     }
     return choice == 1;
   }
 
-  private boolean isValidChoice(Integer choice) {
-    return choice != null && 0 < choice  && choice < 3;
+  private boolean isValidChoice(int choice) {
+    return 0 < choice  && choice < 3;
   }
 
   public Integer requestMove() {

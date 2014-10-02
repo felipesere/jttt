@@ -4,9 +4,14 @@ import de.fesere.tictactoe.Board;
 import de.fesere.tictactoe.Mark;
 import de.fesere.tictactoe.Player;
 
+import java.util.List;
+import java.util.Random;
+
 public class RandomPlayer implements Player {
 
   private final Mark mark;
+  private final Random random = new Random();
+
 
   public RandomPlayer(Mark mark) {
     this.mark = mark;
@@ -19,7 +24,12 @@ public class RandomPlayer implements Player {
 
   @Override
   public Board performMove(Board board) {
-    int move = board.getPossibleMoves().get(0);
+    int move = getRandomMove(board);
     return board.nextBoardFor(move, mark);
+  }
+
+  private int getRandomMove(Board board) {
+    List<Integer> moves = board.getPossibleMoves();
+    return moves.get(random.nextInt(moves.size()));
   }
 }
