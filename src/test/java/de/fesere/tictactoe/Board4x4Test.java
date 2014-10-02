@@ -1,6 +1,5 @@
 package de.fesere.tictactoe;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static de.fesere.tictactoe.PlayerMark.X;
@@ -23,7 +22,6 @@ public class Board4x4Test {
     assertThat(board.isFinished(), is(false));
   }
 
-  @Ignore
   @Test
   public void hasNoWinnerForOnlyThreeInTopRow() {
     Board newBoard = makeMoves(1,2,3);
