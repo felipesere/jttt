@@ -130,6 +130,10 @@ public class Board {
     return allLines().stream().anyMatch(line -> line.isWinner(player));
   }
 
+  public boolean invalidMove(int move) {
+    return !getPossibleMoves().contains(move);
+  }
+
   private class Line {
 
     private final Mark first;

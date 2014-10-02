@@ -1,14 +1,16 @@
 package de.fesere.tictactoe.players;
 
-import de.fesere.tictactoe.*;
-import de.fesere.tictactoe.ui.ConsoleInterface;
+import de.fesere.tictactoe.Board;
+import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.Player;
+import de.fesere.tictactoe.ui.Console;
 
 public class HumanPlayer implements Player {
 
   private final Mark mark;
-  private final ConsoleInterface cli;
+  private final Console cli;
 
-  public HumanPlayer(Mark mark, ConsoleInterface cli) {
+  public HumanPlayer(Mark mark, Console cli) {
     this.mark = mark;
     this.cli = cli;
   }
@@ -19,14 +21,14 @@ public class HumanPlayer implements Player {
   }
 
   public HumanPlayer(Mark o) {
-    this(o, new ConsoleInterface());
+    this(o, new Console());
   }
 
   @Override
   public Board performMove(Board board) {
     Integer move = cli.requestMove();
-    if(invalidMove(move, board)) {
-      return performMove(board);
+    while(invalidMove(move,board)) {
+      move = cli.requestMove();
     }
     return board.nextBoardFor(move, mark);
   }

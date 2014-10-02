@@ -2,7 +2,7 @@ package de.fesere.tictactoe.ui;
 
 import de.fesere.tictactoe.Mark;
 
-public class FakeConsole extends ConsoleInterface {
+public class FakeConsole extends Console {
 
   public FakeConsole() {
     super(new FakeIO());

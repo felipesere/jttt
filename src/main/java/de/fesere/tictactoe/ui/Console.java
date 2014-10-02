@@ -7,14 +7,14 @@ import de.fesere.tictactoe.players.PlayerFactory;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class ConsoleInterface {
+public class Console {
   private final IO io;
 
-  public ConsoleInterface(IO io) {
+  public Console(IO io) {
     this.io = io;
   }
 
-  public ConsoleInterface() {
+  public Console() {
     this(new IO());
   }
 

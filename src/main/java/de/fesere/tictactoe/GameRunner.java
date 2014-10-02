@@ -1,16 +1,16 @@
 package de.fesere.tictactoe;
 
-import de.fesere.tictactoe.ui.ConsoleInterface;
+import de.fesere.tictactoe.ui.Console;
 
 public class GameRunner {
 
-  public void run(ConsoleInterface consoleInterface, Player[] players) {
+  public void run(Console console, Player[] players) {
     boolean play = true;
 
     while(play) {
-      Game game = new Game(consoleInterface, players);
+      Game game = new Game(console, players);
       game.play();
-      play = consoleInterface.requestRematch();
+      play = console.requestRematch();
     }
   }
 }

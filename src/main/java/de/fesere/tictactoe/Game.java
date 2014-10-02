@@ -1,6 +1,6 @@
 package de.fesere.tictactoe;
 
-import de.fesere.tictactoe.ui.ConsoleInterface;
+import de.fesere.tictactoe.ui.Console;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +10,10 @@ import static de.fesere.tictactoe.Mark.X;
 public class Game {
 
   private final Map<Mark, Player> players;
-  private final ConsoleInterface console;
+  private final Console console;
   private Board board = new Board();
 
-  public Game(ConsoleInterface console, Player... players) {
+  public Game(Console console, Player... players) {
     this.console = console;
     this.players = convertToMap(players);
   }
@@ -47,7 +47,6 @@ public class Game {
   private Mark getWinner() {
     return board.getWinner();
   }
-
 
   private Map<Mark, Player> convertToMap(Player[] players) {
     Map<Mark, Player> result = new HashMap<>();

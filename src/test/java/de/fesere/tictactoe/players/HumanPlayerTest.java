@@ -1,7 +1,7 @@
 package de.fesere.tictactoe.players;
 
 import de.fesere.tictactoe.Board;
-import de.fesere.tictactoe.ui.ConsoleInterface;
+import de.fesere.tictactoe.ui.Console;
 import de.fesere.tictactoe.Player;
 import org.junit.Test;
 
@@ -45,8 +45,8 @@ public class HumanPlayerTest extends PlayerCommonTest {
     assertThat(newBoard.getPossibleMoves(), not(hasItems(1,2)));
   }
 
-  public ConsoleInterface consoleUi(Integer ... items) {
-    return new ConsoleInterface() {
+  public Console consoleUi(Integer ... items) {
+    return new Console() {
       final List<Integer> elements = new LinkedList<>(asList(items));
 
       @Override

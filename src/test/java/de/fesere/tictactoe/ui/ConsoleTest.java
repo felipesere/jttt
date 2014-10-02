@@ -9,11 +9,11 @@ import static de.fesere.tictactoe.Mark.X;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ConsoleInterfaceTest {
+public class ConsoleTest {
 
   private final Board emptyBoard = new Board();
   private final FakeIO fakeIO = new FakeIO();
-  private final ConsoleInterface console = new ConsoleInterface(fakeIO);
+  private final Console console = new Console(fakeIO);
 
   @Before
   public void setup() {
