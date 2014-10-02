@@ -22,25 +22,36 @@ public class AiPlayer implements Player {
   }
 
   private int bestMove(Board board) {
-    return negamax(board, -10, 10, mark).location;
+    int bestMove = -1;
+    int bestScore = -10;
+    for(int move : shuffledMoves(board)) {
+      Board newBoard = board.nextBoardFor(move, mark);
+      int score = -negamax(newBoard,-10, 10, mark.opponent());
+
+      if(score > bestScore) {
+        bestScore = score;
+        bestMove = move;
+      }
+    }
+    return bestMove;
   }
 
-  private RatedMove negamax(Board board, int alpha, int beta, Mark mark) {
+  private int negamax(Board board, int alpha, int beta, Mark mark) {
     int bestMove = -1;
 
     if (board.isFinished()) {
-      return new RatedMove(valueOfBoard(board, mark), bestMove);
+      return valueOfBoard(board, mark);
     } else {
       return getRatedMove(board, alpha, beta, mark);
     }
   }
 
-  private RatedMove getRatedMove(Board board, int alpha, int beta, Mark mark) {
+  private int getRatedMove(Board board, int alpha, int beta, Mark mark) {
     int bestMove = -1;
     int bestScore = alpha;
     for(int move : shuffledMoves(board)) {
       Board newBoard = board.nextBoardFor(move, mark);
-      int score = -negamax(newBoard, -beta, -alpha, mark.opponent()).score;
+      int score = -negamax(newBoard, -beta, -alpha, mark.opponent());
 
       if(score > bestScore) {
         bestScore = score;
@@ -52,7 +63,7 @@ public class AiPlayer implements Player {
         break;
       }
     }
-    return new RatedMove(bestScore, bestMove);
+    return bestScore;
   }
 
   private int valueOfBoard(Board board, Mark mark) {
