@@ -5,11 +5,11 @@ import de.fesere.tictactoe.ui.Console;
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.fesere.tictactoe.Mark.X;
+import static de.fesere.tictactoe.PlayerMark.X;
 
 public class Game {
 
-  private final Map<Mark, Player> players;
+  private final Map<PlayerMark, Player> players;
   private final Console console;
   private Board board = new Board();
 
@@ -44,12 +44,12 @@ public class Game {
     return board.hasWinner();
   }
 
-  private Mark getWinner() {
+  private PlayerMark getWinner() {
     return board.getWinner();
   }
 
-  private Map<Mark, Player> convertToMap(Player[] players) {
-    Map<Mark, Player> result = new HashMap<>();
+  private Map<PlayerMark, Player> convertToMap(Player[] players) {
+    Map<PlayerMark, Player> result = new HashMap<>();
     for(Player player : players) {
       result.put(player.getMark(), player);
     }

@@ -2,7 +2,7 @@ package de.fesere.tictactoe;
 
 import org.junit.Test;
 
-import static de.fesere.tictactoe.Mark.*;
+import static de.fesere.tictactoe.PlayerMark.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

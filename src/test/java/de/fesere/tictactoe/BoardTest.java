@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static de.fesere.tictactoe.Mark.*;
+import static de.fesere.tictactoe.PlayerMark.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -29,7 +29,7 @@ public class BoardTest {
 
   @Test
   public void itStartsWithNineEmptyMarks() {
-    assertThat(marks(board).allMatch(Mark::isEmpty), is(true));
+    assertThat(marks(board).allMatch(PlayerMark::isEmpty), is(true));
   }
 
   @Test
@@ -43,7 +43,7 @@ public class BoardTest {
   public void markingAMoveIsReflectedInMarks() {
     Board newBoard = board.nextBoardFor(1, O);
     assertThat(newBoard.getMarks().get(1), is(O));
-    assertThat(marks(newBoard).filter(Mark::isEmpty).count(), is(8L));
+    assertThat(marks(newBoard).filter(PlayerMark::isEmpty).count(), is(8L));
   }
 
   @Test(expected = InvalidMoveException.class)
@@ -124,7 +124,7 @@ public class BoardTest {
     assertThat(board.hasWinner(), is(false));
   }
 
-  private Stream<Mark> marks(Board board) {
+  private Stream<PlayerMark> marks(Board board) {
     return board.getMarks().values().stream();
   }
 }

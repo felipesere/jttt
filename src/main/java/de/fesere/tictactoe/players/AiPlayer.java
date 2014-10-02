@@ -1,7 +1,7 @@
 package de.fesere.tictactoe.players;
 
 import de.fesere.tictactoe.Board;
-import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.PlayerMark;
 import de.fesere.tictactoe.Player;
 
 import java.util.Collections;
@@ -9,9 +9,9 @@ import java.util.List;
 
 public class AiPlayer implements Player {
 
-  private Mark mark;
+  private PlayerMark mark;
 
-  public AiPlayer(Mark mark) {
+  public AiPlayer(PlayerMark mark) {
     this.mark = mark;
   }
 
@@ -36,7 +36,7 @@ public class AiPlayer implements Player {
     return bestMove;
   }
 
-  private int negamax(Board board, int alpha, int beta, Mark mark) {
+  private int negamax(Board board, int alpha, int beta, PlayerMark mark) {
     if (board.isFinished()) {
       return valueOfBoard(board, mark);
     } else {
@@ -44,7 +44,7 @@ public class AiPlayer implements Player {
     }
   }
 
-  private int scoreUnfinishedBoard(Board board, int alpha, int beta, Mark mark) {
+  private int scoreUnfinishedBoard(Board board, int alpha, int beta, PlayerMark mark) {
     int bestScore = alpha;
     for(int move : shuffledMoves(board)) {
       Board newBoard = board.nextBoardFor(move, mark);
@@ -62,7 +62,7 @@ public class AiPlayer implements Player {
     return bestScore;
   }
 
-  private int valueOfBoard(Board board, Mark mark) {
+  private int valueOfBoard(Board board, PlayerMark mark) {
     if (board.isWinner(mark)) {
       return board.getScore();
     } else {
@@ -77,7 +77,7 @@ public class AiPlayer implements Player {
   }
 
   @Override
-  public Mark getMark() {
+  public PlayerMark getMark() {
     return mark;
   }
 }

@@ -11,7 +11,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static de.fesere.tictactoe.Mark.*;
+import static de.fesere.tictactoe.PlayerMark.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

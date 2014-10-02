@@ -1,7 +1,7 @@
 package de.fesere.tictactoe.ui;
 
 import de.fesere.tictactoe.Board;
-import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.PlayerMark;
 
 import java.util.Map;
 import java.util.stream.Stream;
@@ -20,7 +20,7 @@ public class Console {
   }
 
   public void displayBoard(Board board) {
-    Map<Integer, Mark> marks = board.getMarks();
+    Map<Integer, PlayerMark> marks = board.getMarks();
     Template template = new Template();
 
     nonEmptyMarks(marks).forEach(entity -> {
@@ -29,7 +29,7 @@ public class Console {
     io.write(template.get());
   }
 
-  private Stream<Map.Entry<Integer, Mark>> nonEmptyMarks(Map<Integer, Mark> marks) {
+  private Stream<Map.Entry<Integer, PlayerMark>> nonEmptyMarks(Map<Integer, PlayerMark> marks) {
     return marks.entrySet().stream().filter(entity -> !entity.getValue().isEmpty());
   }
 
@@ -52,7 +52,7 @@ public class Console {
     return choice;
   }
 
-  public void announceWinner(Mark winner) {
+  public void announceWinner(PlayerMark winner) {
     io.write("The winner is " + winner);
   }
 

@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-import static de.fesere.tictactoe.Mark.O;
+import static de.fesere.tictactoe.PlayerMark.O;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;

@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static de.fesere.tictactoe.Mark.O;
-import static de.fesere.tictactoe.Mark.X;
+import static de.fesere.tictactoe.PlayerMark.O;
+import static de.fesere.tictactoe.PlayerMark.X;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,7 +38,7 @@ public class GameTest {
     assertThat(fakeConsole.hasDraw(), is(true));
   }
 
-  public Player scriptedPlayer(Mark mark, List<Integer> inputMoves) {
+  public Player scriptedPlayer(PlayerMark mark, List<Integer> inputMoves) {
     return new ScriptablePlayer(mark, inputMoves);
   }
 }

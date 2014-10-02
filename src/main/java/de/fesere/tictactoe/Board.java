@@ -8,18 +8,18 @@ import java.util.stream.IntStream;
 
 public class Board {
 
-  private final List<Mark> marks;
+  private final List<PlayerMark> marks;
 
   public Board() {
-    marks = Collections.nCopies(9, Mark.EMPTY);
+    marks = Collections.nCopies(9, PlayerMark.EMPTY);
   }
 
-  public Board(List<Mark> marks){
+  public Board(List<PlayerMark> marks){
     this.marks = marks;
   }
 
-  public Board nextBoardFor(int index, Mark mark) {
-    List<Mark> modifiedMarks = applyMark(index, mark);
+  public Board nextBoardFor(int index, PlayerMark mark) {
+    List<PlayerMark> modifiedMarks = applyMark(index, mark);
     return new Board(modifiedMarks);
   }
 
@@ -54,11 +54,11 @@ public class Board {
    return input.boxed().collect(Collectors.toList());
   }
 
-  private List<Mark> applyMark(int index, Mark mark) {
+  private List<PlayerMark> applyMark(int index, PlayerMark mark) {
     if(moveAlreadyTaken(index)){
       throw new InvalidMoveException();
     }
-    List<Mark> modified = new LinkedList<>(marks);
+    List<PlayerMark> modified = new LinkedList<>(marks);
     modified.set(index-1, mark);
     return modified;
   }
@@ -99,7 +99,7 @@ public class Board {
   }
 
   private Line line(int ... indizes) {
-    List<Mark> elements = new LinkedList<>();
+    List<PlayerMark> elements = new LinkedList<>();
     for(int index : indizes) {
       elements.add(marks.get(index));
     }
@@ -113,19 +113,19 @@ public class Board {
     return 0;
   }
 
-  public Map<Integer, Mark> getMarks() {
-    Map<Integer, Mark> result = new HashMap<>();
+  public Map<Integer, PlayerMark> getMarks() {
+    Map<Integer, PlayerMark> result = new HashMap<>();
     for(int i = 0; i < marks.size(); i++) {
       result.put(i+1, marks.get(i));
     }
     return result;
   }
 
-  public Mark getWinner() {
+  public PlayerMark getWinner() {
     return allLines().stream().filter(Line::hasWinner).findFirst().get().first;
   }
 
-  public boolean isWinner(Mark player) {
+  public boolean isWinner(PlayerMark player) {
     return allLines().stream().anyMatch(line -> line.isWinner(player));
   }
 
@@ -135,11 +135,11 @@ public class Board {
 
   private class Line {
 
-    private final Mark first;
-    private final Mark second;
-    private final Mark third;
+    private final PlayerMark first;
+    private final PlayerMark second;
+    private final PlayerMark third;
 
-    public Line(List<Mark> elements){
+    public Line(List<PlayerMark> elements){
       first  = elements.get(0);
       second = elements.get(1);
       third  = elements.get(2);
@@ -153,7 +153,7 @@ public class Board {
       return first == second && second == third;
     }
 
-    public boolean isWinner(Mark player) {
+    public boolean isWinner(PlayerMark player) {
       return allSame() && first == player;
     }
   }

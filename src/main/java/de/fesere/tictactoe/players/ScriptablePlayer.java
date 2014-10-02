@@ -1,7 +1,7 @@
 package de.fesere.tictactoe.players;
 
 import de.fesere.tictactoe.Board;
-import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.PlayerMark;
 import de.fesere.tictactoe.Player;
 
 import java.util.LinkedList;
@@ -9,10 +9,10 @@ import java.util.List;
 
 public class ScriptablePlayer implements Player {
 
-  private final Mark mark;
+  private final PlayerMark mark;
   private final List<Integer> moveList;
 
-  public ScriptablePlayer(Mark mark, List<Integer> moves) {
+  public ScriptablePlayer(PlayerMark mark, List<Integer> moves) {
     this.mark = mark;
     this.moveList = new LinkedList<>(moves);
   }
@@ -24,7 +24,7 @@ public class ScriptablePlayer implements Player {
   }
 
   @Override
-  public Mark getMark() {
+  public PlayerMark getMark() {
     return mark;
   }
 }

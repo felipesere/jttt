@@ -1,7 +1,7 @@
 package de.fesere.tictactoe.players;
 
 import de.fesere.tictactoe.Board;
-import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.PlayerMark;
 import de.fesere.tictactoe.Player;
 
 import java.util.List;
@@ -9,16 +9,16 @@ import java.util.Random;
 
 public class RandomPlayer implements Player {
 
-  private final Mark mark;
+  private final PlayerMark mark;
   private final Random random = new Random();
 
 
-  public RandomPlayer(Mark mark) {
+  public RandomPlayer(PlayerMark mark) {
     this.mark = mark;
   }
 
   @Override
-  public Mark getMark() {
+  public PlayerMark getMark() {
     return mark;
   }
 

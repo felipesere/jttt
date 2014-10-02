@@ -1,6 +1,6 @@
 package de.fesere.tictactoe.ui;
 
-import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.PlayerMark;
 
 public class FakeConsole extends Console {
 
@@ -8,7 +8,7 @@ public class FakeConsole extends Console {
     super(new FakeIO());
   }
 
-  private Mark winnner = null;
+  private PlayerMark winnner = null;
   private boolean draw = false;
   private int Owins = 0;
   private int xWins = 0;
@@ -19,9 +19,9 @@ public class FakeConsole extends Console {
   }
 
   @Override
-  public void announceWinner(Mark winner) {
+  public void announceWinner(PlayerMark winner) {
     this.winnner = winner;
-    if (winner == Mark.O) {
+    if (winner == PlayerMark.O) {
       Owins++;
     }
     else {
@@ -39,7 +39,7 @@ public class FakeConsole extends Console {
     return false;
   }
 
-  public boolean hasWinner(Mark winner) {
+  public boolean hasWinner(PlayerMark winner) {
     return this.winnner == winner;
   }
 

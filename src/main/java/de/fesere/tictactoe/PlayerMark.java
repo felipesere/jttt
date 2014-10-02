@@ -1,11 +1,11 @@
 package de.fesere.tictactoe;
 
-public enum Mark {
+public enum PlayerMark {
   X,
   O,
   EMPTY;
 
-  public Mark opponent() {
+  public PlayerMark opponent() {
     if(this == EMPTY) {
       throw new RuntimeException("no opponent of empty!");
     }

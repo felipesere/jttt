@@ -5,8 +5,8 @@ import de.fesere.tictactoe.players.RandomPlayer;
 import de.fesere.tictactoe.ui.FakeConsole;
 import org.junit.Test;
 
-import static de.fesere.tictactoe.Mark.O;
-import static de.fesere.tictactoe.Mark.X;
+import static de.fesere.tictactoe.PlayerMark.O;
+import static de.fesere.tictactoe.PlayerMark.X;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 

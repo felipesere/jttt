@@ -1,26 +1,26 @@
 package de.fesere.tictactoe.players;
 
 import de.fesere.tictactoe.Board;
-import de.fesere.tictactoe.Mark;
+import de.fesere.tictactoe.PlayerMark;
 import de.fesere.tictactoe.Player;
 import de.fesere.tictactoe.ui.Console;
 
 public class HumanPlayer implements Player {
 
-  private final Mark mark;
+  private final PlayerMark mark;
   private final Console cli;
 
-  public HumanPlayer(Mark mark, Console cli) {
+  public HumanPlayer(PlayerMark mark, Console cli) {
     this.mark = mark;
     this.cli = cli;
   }
 
   @Override
-  public Mark getMark() {
+  public PlayerMark getMark() {
     return mark;
   }
 
-  public HumanPlayer(Mark o) {
+  public HumanPlayer(PlayerMark o) {
     this(o, new Console());
   }
 

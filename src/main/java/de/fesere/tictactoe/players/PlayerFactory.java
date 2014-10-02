@@ -2,8 +2,8 @@ package de.fesere.tictactoe.players;
 
 import de.fesere.tictactoe.Player;
 
-import static de.fesere.tictactoe.Mark.O;
-import static de.fesere.tictactoe.Mark.X;
+import static de.fesere.tictactoe.PlayerMark.O;
+import static de.fesere.tictactoe.PlayerMark.X;
 
 public class PlayerFactory {
 
