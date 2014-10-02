@@ -18,20 +18,20 @@ public class Board {
     this.marks = marks;
   }
 
+  public Board(int size) {
+    int effectiveSize = size * size;
+    marks = Collections.nCopies(effectiveSize, PlayerMark.EMPTY);
+  }
+
   public Board nextBoardFor(int index, PlayerMark mark) {
     List<PlayerMark> modifiedMarks = applyMark(index, mark);
     return new Board(modifiedMarks);
   }
 
   public List<Integer> getPossibleMoves() {
-    List<Integer> moves = possibleMoves();
-    return moves;
-  }
-
-  private List<Integer> possibleMoves() {
     return IntegerList(allIndices()
-             .filter(i -> marks.get(i).isEmpty())
-             .map(i -> i + 1));
+            .filter(i -> marks.get(i).isEmpty())
+            .map(i -> i + 1));
   }
 
   public boolean hasWinner() {
@@ -108,7 +108,7 @@ public class Board {
 
   public int getScore() {
     if(hasWinner()) {
-      return possibleMoves().size() + 1;
+      return getPossibleMoves().size() + 1;
     }
     return 0;
   }
