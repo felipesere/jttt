@@ -95,6 +95,14 @@ public class ConsoleTest {
     assertThat(result, is(1));
   }
 
+  @Test
+  public void requestsBoardSize() {
+    fakeIO.setInputs(2);
+    int result = console.requestBoardSize(new int[]{3,4});
+    expectOutputToBe("Choose board size: (1) 3x3 (2) 4x4");
+    assertThat(result, is(2));
+  }
+
   private void expectOutputToBe(String expected) {
     assertThat(fakeIO.getWritten(), is(expected));
   }

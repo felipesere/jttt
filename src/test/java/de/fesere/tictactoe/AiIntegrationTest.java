@@ -20,9 +20,10 @@ public class AiIntegrationTest {
     Player ai     = new AiPlayer(X);
     Player random = new RandomPlayer(O);
 
+    Board board = new Board();
     FakeConsole consoleInterface = new FakeConsole();
     for (int i = 0; i < 100; i++) {
-      Game game = new Game(consoleInterface, ai, random);
+      Game game = new Game(consoleInterface,board, ai, random);
       game.play();
     }
 

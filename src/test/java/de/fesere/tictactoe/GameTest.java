@@ -16,6 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class GameTest {
 
   private final FakeConsole fakeConsole = new FakeConsole();
+  private final Board board = new Board();
 
   @Before
   public void setup() {
@@ -24,16 +25,16 @@ public class GameTest {
 
   @Test
   public void firstPlayerWins() {
-    Game game = new Game(fakeConsole, scriptedPlayer(X, asList(1,2,3)),
-                                      scriptedPlayer(O, asList(4,5)));
+    Game game = new Game(fakeConsole,board, scriptedPlayer(X, asList(1,2,3)),
+                                            scriptedPlayer(O, asList(4,5)));
     game.play();
     assertThat(fakeConsole.hasWinner(X), is(true));
   }
 
   @Test
   public void testAnnounceDraw() {
-    Game game = new Game(fakeConsole, scriptedPlayer(X, asList(1, 3, 4, 8, 9)),
-                                      scriptedPlayer(O, asList(2, 5, 6, 7)));
+    Game game = new Game(fakeConsole, board, scriptedPlayer(X, asList(1, 3, 4, 8, 9)),
+                                             scriptedPlayer(O, asList(2, 5, 6, 7)));
     game.play();
     assertThat(fakeConsole.hasDraw(), is(true));
   }

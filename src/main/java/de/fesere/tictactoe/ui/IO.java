@@ -1,6 +1,7 @@
 package de.fesere.tictactoe.ui;
 
 import java.io.*;
+import java.util.function.Supplier;
 
 public class IO {
 
@@ -16,6 +17,13 @@ public class IO {
     this.output = output;
   }
 
+  public Supplier<Integer> readInput(Announcer announcer) {
+    return () -> {
+      announcer.announce();
+      return readInput();
+    };
+  }
+
   public Integer readInput() {
     try {
       return Integer.parseInt(stream.readLine());
@@ -28,5 +36,9 @@ public class IO {
 
   public void write(String s) {
     output.println(s);
+  }
+
+  public interface Announcer {
+    void announce();
   }
 }

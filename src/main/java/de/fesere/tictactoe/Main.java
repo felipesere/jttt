@@ -8,7 +8,7 @@ public class Main {
     Console console = new Console();
     int choice = console.requestPlayers();
     Player [] players = PlayerFactory.getPlayers(choice);
-
-    new GameRunner().run(console, players);
+    choice = console.requestBoardSize(new int []{3,4});
+    new GameRunner().run(console,new Board(choice), players);
   }
 }

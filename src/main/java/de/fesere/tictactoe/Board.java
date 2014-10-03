@@ -136,4 +136,8 @@ public class Board {
   public boolean validMove(int move) {
     return getPossibleMoves().contains(move);
   }
+
+  public int getSize() {
+    return sideSize;
+  }
 }

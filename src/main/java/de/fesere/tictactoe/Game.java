@@ -11,13 +11,13 @@ public class Game {
 
   private final Map<PlayerMark, Player> players;
   private final Console console;
-  private Board board = new Board();
+  private Board board = new Board(4);
 
-  public Game(Console console, Player... players) {
+  public Game(Console console,Board board, Player...players) {
     this.console = console;
+    this.board = board;
     this.players = convertToMap(players);
   }
-
   public void play() {
     playAllTurns();
     showFinalBoard();
