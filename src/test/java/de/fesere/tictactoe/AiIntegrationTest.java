@@ -22,7 +22,7 @@ public class AiIntegrationTest {
 
     Board board = new Board();
     FakeConsole consoleInterface = new FakeConsole();
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1000; i++) {
       Game game = new Game(consoleInterface,board, ai, random);
       game.play();
     }

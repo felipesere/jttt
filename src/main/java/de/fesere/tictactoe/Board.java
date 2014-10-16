@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.IntStream.*;
+import static java.util.stream.IntStream.range;
 
 public class Board {
 
@@ -19,15 +19,17 @@ public class Board {
     this(3);
   }
 
-  public Board(List<PlayerMark> marks) {
-    this.marks = marks;
-    this.sideSize = (int) Math.sqrt(marks.size());
+  public Board(int size) {
+    this(Collections.nCopies(size * size, PlayerMark.EMPTY));
   }
 
-  public Board(int size) {
-    this.sideSize = size;
-    int effectiveSize = size * size;
-    marks = Collections.nCopies(effectiveSize, PlayerMark.EMPTY);
+  public Board(List<PlayerMark> marks) {
+    this.marks = marks;
+    this.sideSize = calculateSideSize(marks);
+  }
+
+  private int calculateSideSize(List<PlayerMark> marks) {
+    return (int) Math.sqrt(marks.size());
   }
 
   public Board nextBoardFor(int index, PlayerMark mark) {
@@ -85,19 +87,11 @@ public class Board {
   }
 
   private List<Line> getColumns() {
-    List<Line> columns = new LinkedList<>();
-    range(0, sideSize).forEach(column -> {
-      columns.add(new Line(getColumn(column)));
-    });
-    return columns;
+    return range(0,sideSize).mapToObj(i -> new Line(getColumn(i))).collect(toList());
   }
 
   private List<PlayerMark> getColumn(int column) {
-    List<PlayerMark> elements = new LinkedList<>();
-    range(0, sideSize).forEach(offset -> {
-      elements.add(marks.get(column + offset * sideSize));
-    });
-    return elements;
+    return range(0, sideSize).mapToObj(i -> marks.get(column + i * sideSize)).collect(toList());
   }
 
   private List<Line> getDiagonals() {

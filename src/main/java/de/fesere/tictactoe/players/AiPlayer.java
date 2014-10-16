@@ -23,7 +23,7 @@ public class AiPlayer implements Player {
 
   private int bestMove(Board board) {
     int bestMove = -1;
-    int bestScore = -10;
+    int bestScore = Integer.MIN_VALUE;
     for(int move : shuffledMoves(board)) {
       Board newBoard = board.nextBoardFor(move, mark);
       int score = -negamax(newBoard,bestScore, 10, mark.opponent());
