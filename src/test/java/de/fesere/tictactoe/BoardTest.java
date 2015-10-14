@@ -19,12 +19,18 @@ public class BoardTest {
 
   @Before
   public void before() {
-    board = new Board();
+    board = new Board(9);
   }
 
   @Test
-  public void itStartsWithNinePossibleMoves() {
+  public void threeByThreeHasSixteenPossibleMoves() {
     assertThat(board.getPossibleMoves(), hasSize(9));
+  }
+
+  @Test
+  public void fourByFourHasSixteenPossibleMoves() {
+    Board biggerBoard = new Board(16);
+    assertThat(biggerBoard.getPossibleMoves(), hasSize(16));
   }
 
   @Test

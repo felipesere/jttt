@@ -14,7 +14,7 @@ public abstract class PlayerCommonTest {
 
   @Test
   public void testReducesTheNumberOfMoves() {
-    Board board = new Board();
+    Board board = new Board(9);
     Player player = playerForCommonTests();
     Board newBoard = player.performMove(board);
 

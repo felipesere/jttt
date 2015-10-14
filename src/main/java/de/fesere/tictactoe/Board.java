@@ -10,8 +10,8 @@ public class Board {
 
   private final List<PlayerMark> marks;
 
-  public Board() {
-    marks = Collections.nCopies(9, PlayerMark.EMPTY);
+  public Board(int numberOfCells) {
+    marks = Collections.nCopies(numberOfCells, PlayerMark.EMPTY);
   }
 
   public Board(List<PlayerMark> marks){
@@ -30,8 +30,8 @@ public class Board {
 
   private List<Integer> possibleMoves() {
     return IntegerList(allIndices()
-             .filter(i -> marks.get(i).isEmpty())
-             .map(i -> i + 1));
+            .filter(i -> marks.get(i).isEmpty())
+            .map(i -> i + 1));
   }
 
   public boolean hasWinner() {

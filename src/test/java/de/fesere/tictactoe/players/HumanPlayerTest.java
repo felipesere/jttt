@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.not;
 
 public class HumanPlayerTest extends PlayerCommonTest {
 
-  private final Board emptyBoard = new Board();
+  private final Board emptyBoard = new Board(9);
 
   @Override
   Player playerForCommonTests() {
