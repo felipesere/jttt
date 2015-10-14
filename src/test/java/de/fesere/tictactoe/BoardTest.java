@@ -34,7 +34,12 @@ public class BoardTest {
   }
 
   @Test
-  public void itStartsWithNineEmptyMarks() {
+  public void threeByThreeHasNineEmptyMarks() {
+    assertThat(marks(board).allMatch(PlayerMark::isEmpty), is(true));
+  }
+
+  @Test
+  public void fourByFourHasSixteenEmptyMarks() {
     assertThat(marks(board).allMatch(PlayerMark::isEmpty), is(true));
   }
 
@@ -67,11 +72,20 @@ public class BoardTest {
 
 
   @Test
-  public void aWinnerIsThreeOftheSameKind() {
+  public void inThreeByThreeBoardWinnerIsThreeOfSameKind() {
     Board board = new Board(asList(X,     X,     X,
                                    EMPTY, EMPTY, EMPTY,
                                    EMPTY, EMPTY, EMPTY));
     hasWinner(board);
+  }
+
+  @Test
+  public void inFourByFourBoardWinnerIsFourOfSameKind() {
+    Board board = new Board(asList(X,     X,     X,     EMPTY,
+                                   EMPTY, EMPTY, EMPTY, EMPTY,
+                                   EMPTY, EMPTY, EMPTY, EMPTY,
+                                   EMPTY, EMPTY, EMPTY, EMPTY));
+    noWinner(board);
   }
 
   @Test
