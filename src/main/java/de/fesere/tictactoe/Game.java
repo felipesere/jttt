@@ -11,7 +11,7 @@ public class Game {
 
   private final Map<PlayerMark, Player> players;
   private final Console console;
-  private Board board = new Board();
+  private Board board = new Board(9);
 
   public Game(Console console, Player... players) {
     this.console = console;

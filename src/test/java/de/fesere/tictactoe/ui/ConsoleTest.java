@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ConsoleTest {
 
-  private final Board emptyBoard = new Board();
+  private final Board emptyBoard = new Board(9);
   private final FakeIO fakeIO = new FakeIO();
   private final Console console = new Console(fakeIO);
 

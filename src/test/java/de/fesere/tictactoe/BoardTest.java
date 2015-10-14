@@ -19,16 +19,27 @@ public class BoardTest {
 
   @Before
   public void before() {
-    board = new Board();
+    board = new Board(9);
   }
 
   @Test
-  public void itStartsWithNinePossibleMoves() {
+  public void threeByThreeHasSixteenPossibleMoves() {
     assertThat(board.getPossibleMoves(), hasSize(9));
   }
 
   @Test
-  public void itStartsWithNineEmptyMarks() {
+  public void fourByFourHasSixteenPossibleMoves() {
+    Board biggerBoard = new Board(16);
+    assertThat(biggerBoard.getPossibleMoves(), hasSize(16));
+  }
+
+  @Test
+  public void threeByThreeHasNineEmptyMarks() {
+    assertThat(marks(board).allMatch(PlayerMark::isEmpty), is(true));
+  }
+
+  @Test
+  public void fourByFourHasSixteenEmptyMarks() {
     assertThat(marks(board).allMatch(PlayerMark::isEmpty), is(true));
   }
 
@@ -61,11 +72,20 @@ public class BoardTest {
 
 
   @Test
-  public void aWinnerIsThreeOftheSameKind() {
+  public void inThreeByThreeBoardWinnerIsThreeOfSameKind() {
     Board board = new Board(asList(X,     X,     X,
                                    EMPTY, EMPTY, EMPTY,
                                    EMPTY, EMPTY, EMPTY));
     hasWinner(board);
+  }
+
+  @Test
+  public void inFourByFourBoardWinnerIsFourOfSameKind() {
+    Board board = new Board(asList(X,     X,     X,     EMPTY,
+                                   EMPTY, EMPTY, EMPTY, EMPTY,
+                                   EMPTY, EMPTY, EMPTY, EMPTY,
+                                   EMPTY, EMPTY, EMPTY, EMPTY));
+    noWinner(board);
   }
 
   @Test
