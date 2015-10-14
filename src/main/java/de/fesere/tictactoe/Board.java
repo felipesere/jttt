@@ -11,7 +11,7 @@ public class Board {
   private final List<PlayerMark> marks;
 
   public Board() {
-    marks = Collections.nCopies(9, PlayerMark.EMPTY);
+    marks = Collections.nCopies(16, PlayerMark.EMPTY);
   }
 
   public Board(List<PlayerMark> marks){
@@ -77,24 +77,26 @@ public class Board {
 
   private List<Line> getRows() {
     List<Line> rows = new LinkedList<>();
-    rows.add(line(0, 1, 2));
-    rows.add(line(3, 4, 5));
-    rows.add(line(6, 7, 8));
+    rows.add(line(0, 1, 2, 3));
+    rows.add(line(4, 5, 6, 7));
+    rows.add(line(8, 9, 10, 11));
+    rows.add(line(12, 13, 14, 15));
     return rows;
   }
 
   private List<Line> getColumns() {
     List<Line> columns = new LinkedList<>();
-    columns.add(line(0, 3, 6));
-    columns.add(line(1, 4, 7));
-    columns.add(line(2, 5, 8));
+    columns.add(line(0, 4, 8, 12));
+    columns.add(line(1, 5, 9, 13));
+    columns.add(line(2, 6, 10, 14));
+    columns.add(line(3, 7, 11, 15));
     return columns;
   }
 
   private List<Line> getDiagonals() {
     List<Line> diagonals = new LinkedList<>();
-    diagonals.add(line(0, 4, 8));
-    diagonals.add(line(2, 4, 6));
+    diagonals.add(line(0, 5, 10, 15));
+    diagonals.add(line(3, 6, 9, 12));
     return diagonals;
   }
 
@@ -138,11 +140,13 @@ public class Board {
     private final PlayerMark first;
     private final PlayerMark second;
     private final PlayerMark third;
+    private final PlayerMark fourth;
 
     public Line(List<PlayerMark> elements){
       first  = elements.get(0);
       second = elements.get(1);
       third  = elements.get(2);
+      fourth  = elements.get(3);
     }
 
     public boolean hasWinner() {
@@ -150,7 +154,7 @@ public class Board {
     }
 
     private boolean allSame() {
-      return first == second && second == third;
+      return first == second && second == third && third == fourth;
     }
 
     public boolean isWinner(PlayerMark player) {

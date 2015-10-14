@@ -22,14 +22,14 @@ public class GameRunnerTest {
 
   @Test
   public void testAnnounceWinner() {
-    Player[] players = new Player[]{new ScriptablePlayer(X, asList(1, 2, 3)), new ScriptablePlayer(O, asList(4, 5))};
+    Player[] players = new Player[]{new ScriptablePlayer(X, asList(1, 2, 3, 4)), new ScriptablePlayer(O, asList(5, 6, 7))};
     runner.run(fakeConsole, players);
     assertThat(fakeConsole.hasWinner(X), is(true));
   }
 
   @Test
   public void testAnnounceDraw() {
-    Player[] players = new Player[]{new ScriptablePlayer(X, asList(1, 3, 4, 8, 9)), new ScriptablePlayer(O, asList(2, 5, 6, 7))};
+    Player[] players = new Player[]{new ScriptablePlayer(X, asList(1, 2, 3, 7, 9, 10, 14, 16)), new ScriptablePlayer(O, asList(4, 5, 6, 8, 11, 12, 13, 15))};
     runner.run(fakeConsole, players);
     assertThat(fakeConsole.hasDraw(), is(true));
   }
